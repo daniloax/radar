@@ -1,5 +1,7 @@
 package view;
 
+import model.Coordinate;
+
 public class Screen {
 
 	public void displayMessage(String message) {
@@ -10,8 +12,8 @@ public class Screen {
 		System.out.println(message);
 	}
 	
-	public void displayCoordenateValue(double coordenate) {
-		System.out.printf("%,.4fº", coordenate);
+	public void displayCoordenate(Coordinate coordenate) {
+		System.out.printf("%,.4fº", coordenate.getValue());
 	}
 	
 }

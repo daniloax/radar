@@ -1,5 +1,6 @@
 package control;
 
+import model.Coordinate;
 import model.RadarDatabase;
 import view.Screen;
 
@@ -15,14 +16,15 @@ public class CellView extends Transaction {
 		RadarDatabase radarDatabase = getRadarDatabase();
 		Screen screen = getScreen();
 		
-		double currentLatitude = radarDatabase.getLatitudeCoordinate(getAccountNumber());
-		double currentLongitude = radarDatabase.getLongitudeCoordinate(getAccountNumber());
+		Coordinate currentLongitude = radarDatabase.getLongitudeCoordinate(getAccountNumber());
+		Coordinate currentLatitude = radarDatabase.getLatitude(getAccountNumber());
+		
 		
 		screen.displayMessageLine("\nPosition Information:");
-		screen.displayMessage(" - Current latitude: ");
-		screen.displayCoordenateValue(currentLatitude);
-		screen.displayMessage("\n - Current longitude: ");
-		screen.displayCoordenateValue(currentLongitude);
+		screen.displayMessage(" - Current longitude: ");
+		screen.displayCoordenate(currentLongitude);
+		screen.displayMessage("\n - Current latitude: ");
+		screen.displayCoordenate(currentLatitude);
 		screen.displayMessageLine("");
 	}
 }

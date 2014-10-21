@@ -7,7 +7,7 @@ import view.Screen;
 public class PositionUpdate extends Transaction {
 
 	private int option;
-	private Double latitude, longitude;
+	private Double longitude, latitude;
 	private Keypad keypad;
 
 	private final static int CANCELED = 3;
@@ -30,7 +30,7 @@ public class PositionUpdate extends Transaction {
 
 			if (option != CANCELED) {
 
-				radarDatabase.updatePosition(getAccountNumber(), latitude, longitude);
+				radarDatabase.updatePosition(getAccountNumber(), longitude, latitude);
 				positionUpdated = true;
 
 				screen.displayMessageLine("\nYour position has been updated.");
@@ -53,8 +53,8 @@ public class PositionUpdate extends Transaction {
 
 		while (userChoice == 0) {
 			screen.displayMessageLine("\nCoordinate Update Menu:");
-			screen.displayMessageLine("1 - Latitude");
-			screen.displayMessageLine("2 - Longitude");
+			screen.displayMessageLine("1 - Longitude");
+			screen.displayMessageLine("2 - Latitude");
 			screen.displayMessageLine("3 - Cancel transaction");
 			screen.displayMessage("\nChoose a coordinate update option: ");
 
@@ -64,13 +64,13 @@ public class PositionUpdate extends Transaction {
 
 				case 1:
 					userChoice = input;
-					screen.displayMessage("\nLatitude coordinate: ");
-					latitude = getLatitude();
+					screen.displayMessage("\nLongitude coordinate: ");
+					longitude = getLongitude();
 					break;
 				case 2:
 					userChoice = input;
-					screen.displayMessage("\nLongitude coordinate: ");
-					longitude = getLongitude();
+					screen.displayMessage("\nLatitude coordinate: ");
+					latitude = getLatitude();
 					break;
 				case CANCELED:
 					userChoice = CANCELED;
@@ -86,12 +86,12 @@ public class PositionUpdate extends Transaction {
 
 	}
 	
-	private double getLatitude() {
-		return keypad.getCoodinate();
-	}
-	
 	private double getLongitude() {
 		return keypad.getCoodinate();
 	}
-
+	
+	private double getLatitude() {
+		return keypad.getCoodinate();
+	}
+		
 }

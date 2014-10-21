@@ -11,17 +11,17 @@ public class RadarDatabase {
 		accounts[1] = new Account(200, "Steve", 54321, 47.9876, 153.4857);
 	}
 	
-	private Account getAccount(int accountNumber) {
+	private Account getAccount(int account) {
 		for (Account currentAccount : accounts) {
-			if (currentAccount.getAccountNumber() == accountNumber)
+			if (currentAccount.getAccount() == account)
 				return currentAccount;
 		}
 		return null;
 	}
 	
-	public boolean authenticateUser(int accountNumber, int password) {
+	public boolean authenticateUser(int account, int password) {
 
-		Account userAccount = getAccount(accountNumber);
+		Account userAccount = getAccount(account);
 		
 		if (userAccount != null)
 			return userAccount.validatePassword(password);
@@ -29,16 +29,16 @@ public class RadarDatabase {
 			return false;		
 	}
 	
-	public double getLatitudeCoordinate(int accountNumber) {
-		return getAccount(accountNumber).getLatitude();
+	public Coordinate getLatitude(int account) {
+		return getAccount(account).getLatitude();
 	}
 	
-	public double getLongitudeCoordinate(int accountNumber) {
-		return getAccount(accountNumber).getLongitude();
+	public Coordinate getLongitudeCoordinate(int account) {
+		return getAccount(account).getLongitude();
 	}
 	
-	public void updatePosition(int accountNumber, Double latitude, Double longitude) {
-		getAccount(accountNumber).updatePosition(latitude, longitude);
+	public void updatePosition(int account, Double longitude, Double latitude ) {
+		getAccount(account).setPosition(longitude, latitude);
 	}
 	
 }
