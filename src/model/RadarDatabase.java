@@ -1,14 +1,19 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class RadarDatabase {
 
-	private Account[] accounts;
+	private List<Account> accounts;
+	private ReadTextFile database;
 	
 	public RadarDatabase() {
-		accounts = new Account[2];
-		accounts[0] = new Account(100, "Bob", 12345, -35.7345, -57.4532);
-		accounts[1] = new Account(200, "Steve", 54321, 47.9876, 153.4857);
+		accounts = new ArrayList<Account>();
+		database = new ReadTextFile();
+		database.openFile();
+		database.readRecords(accounts);
+		database.closeFile();
 	}
 	
 	private Account getAccount(int account) {

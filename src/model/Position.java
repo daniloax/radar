@@ -1,7 +1,9 @@
 
 package model;
 
-public class Position<X, Y> {
+import java.io.Serializable;
+
+public class Position<X, Y> implements Serializable {
 	
 	public X x;
 	public Y y;

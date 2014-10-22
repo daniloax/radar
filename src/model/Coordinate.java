@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Coordinate {
+import java.io.Serializable;
+
+public abstract class Coordinate implements Serializable {
 
 	private double value;
 	
