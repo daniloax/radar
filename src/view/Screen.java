@@ -12,8 +12,8 @@ public class Screen {
 		System.out.println(message);
 	}
 	
-	public void displayCoordenate(Coordinate coordenate) {
-		System.out.printf("%,.4fº", coordenate.getValue());
+	public void displayCoordenate(double coordenate) {
+		System.out.printf("%,.4fº", coordenate);
 	}
 	
 }

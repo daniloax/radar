@@ -16,15 +16,11 @@ public class CellView extends Transaction {
 		RadarDatabase radarDatabase = getRadarDatabase();
 		Screen screen = getScreen();
 		
-		Coordinate currentLongitude = radarDatabase.getLongitudeCoordinate(getAccountNumber());
-		Coordinate currentLatitude = radarDatabase.getLatitude(getAccountNumber());
-		
-		
 		screen.displayMessageLine("\nPosition Information:");
 		screen.displayMessage(" - Current longitude: ");
-		screen.displayCoordenate(currentLongitude);
+		screen.displayCoordenate(radarDatabase.getLongitude(getAccountNumber()));
 		screen.displayMessage("\n - Current latitude: ");
-		screen.displayCoordenate(currentLatitude);
+		screen.displayCoordenate(radarDatabase.getLatitude(getAccountNumber()));
 		screen.displayMessageLine("");
 	}
 }

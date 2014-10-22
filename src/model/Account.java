@@ -55,20 +55,20 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 	
-	public Coordinate getLongitude() {
-		return position.x;
+	public double getLongitude() {
+		return longitude.getValue();
 	}
 
-	public void setLongitude(Coordinate longitude) {
-		this.position.x = (Longitude) longitude;
+	public void setLongitude(double longitude) {
+		this.longitude.setValue(longitude);
 	}
 
-	public Coordinate getLatitude() {
-		return position.y;
+	public double getLatitude() {
+		return latitude.getValue();
 	}
 
-	public void setLatitude(Coordinate latitude) {
-		this.position.y = (Latitude) latitude;
+	public void setLatitude(double latitude) {
+		this.latitude.setValue(latitude);
 	}
 
 	public Position<Longitude, Latitude> getPosition() {

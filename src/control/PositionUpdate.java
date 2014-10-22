@@ -30,7 +30,7 @@ public class PositionUpdate extends Transaction {
 
 			if (option != CANCELED) {
 
-				radarDatabase.updatePosition(getAccountNumber(), longitude, latitude);
+				radarDatabase.setPosition(getAccountNumber(), longitude, latitude);
 				positionUpdated = true;
 
 				screen.displayMessageLine("\nYour position has been updated.");

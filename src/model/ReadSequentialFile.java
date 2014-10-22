@@ -41,7 +41,7 @@ public class ReadSequentialFile
 
 				System.out.printf( "%-10d%-12s%-12.4f%10.4f\n",
 						record.getAccount(), record.getUser(),
-						record.getLongitude().getValue(), record.getLatitude().getValue() );
+						record.getLongitude(), record.getLatitude() );
 
 			}
 

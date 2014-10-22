@@ -22,14 +22,9 @@ public class CreateTextFile
 		}
 	}
 
-	public void addRecords()
-	{
+	public void addRecords() {
+
 		Account record = new Account();
-		int accountNumber = 0;
-		String userName;
-		double longitude;
-		double latitude;
-		Position position;
 
 		Scanner input = new Scanner( System.in );
 
@@ -40,7 +35,7 @@ public class CreateTextFile
 				"On Windows type <ctrl> z then press Enter" );
 
 		System.out.printf( "%s\n%s", 
-				"Enter account number (> 0), user name, password, longitude and latitude.",
+				"Enter account number (> 0), user name, longitude and latitude.",
 				"? " );
 
 		while ( input.hasNext() ) {
@@ -49,16 +44,14 @@ public class CreateTextFile
 
 				record.setAccount( input.nextInt() );
 				record.setUser( input.next() );
-				longitude = input.nextDouble();
-				latitude = input.nextDouble();
-				record.setLongitude(new Longitude(longitude));
-				record.setLatitude(new Latitude(latitude));
+				record.setLongitude(input.nextDouble());
+				record.setLatitude(input.nextDouble());
 
 				if ( record.getAccount() > 0 ) {
 
 					output.format( "%d %s %.4f %.4f\n", record.getAccount(), 
-							record.getUser(), record.getLongitude(),
-							record.getLatitude() );
+							record.getUser(), record.getPosition().x.getValue(),
+							record.getPosition().y.getValue() );
 				} else {
 					System.out.println("Account number must be greater than 0." );
 				}
@@ -81,18 +74,3 @@ public class CreateTextFile
 			output.close();
 	}
 }
-
-/*************************************************************************
- * (C) Copyright 1992-2010 by Deitel & Associates, Inc. and               *
- * Pearson Education, Inc. All Rights Reserved.                           *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
- * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
- *************************************************************************/

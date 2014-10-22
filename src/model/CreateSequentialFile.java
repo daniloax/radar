@@ -1,7 +1,5 @@
 package model;
 
-// Fig. 17.17: CreateSequentialFile.java
-// Writing objects sequentially to a file with class ObjectOutputStream.
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -10,25 +8,17 @@ import java.util.Scanner;
 
 public class CreateSequentialFile
 {
-   private ObjectOutputStream output; // outputs data to file
+   private ObjectOutputStream output;
 
-   // allow user to specify file name
-   public void openFile()
-   {
-      try // open file
-      {
-         output = new ObjectOutputStream(
-            new FileOutputStream( "radar.ser" ) );
-      } // end try
-      catch ( IOException ioException )
-      {
+   public void openFile() {
+      try {
+         output = new ObjectOutputStream(new FileOutputStream( "radar.ser" ) );
+      } catch ( IOException ioException ) {
          System.err.println( "Error opening file." );
-      } // end catch
-   } // end method openFile
+      }
+   }
 
-   // add records to file
-   public void addRecords()
-   {
+   public void addRecords() {
       Account record;
       int accountNumber = 0;
       String userName;
@@ -49,10 +39,8 @@ public class CreateSequentialFile
          "Enter account number (> 0), user name, password, longitude and latitude.",
          "? " );
 
-      while ( input.hasNext() )
-      {
-         try
-         {
+      while ( input.hasNext() ) {
+         try {
             accountNumber = input.nextInt();
             userName = input.next();
             password = input.nextInt();
@@ -63,45 +51,34 @@ public class CreateSequentialFile
             if ( accountNumber > 0 ) {
 
                record = new Account( accountNumber, userName, password, position );
-               output.writeObject( record ); // output record
-            } // end if
-            else
-            {
+               output.writeObject( record );
+            } else {
                System.out.println(
                   "Account number must be greater than 0." );
-            } // end else
-         } // end try
-         catch ( IOException ioException )
-         {
+            }
+         } catch ( IOException ioException ) {
             System.err.println( "Error writing to file." );
             return;
-         } // end catch
-         catch ( NoSuchElementException elementException )
-         {
+         } catch ( NoSuchElementException elementException ) {
             System.err.println( "Invalid input. Please try again." );
-            input.nextLine(); // discard input so user can try again
-         } // end catch
+            input.nextLine();
+         }
 
          System.out.printf( "%s %s\n%s", "Enter account number (>0),",
             "first name, last name and balance.", "? " );
-      } // end while
-   } // end method addRecords
+      }
+   }
 
-   // close file and terminate application 
-   public void closeFile() 
-   {
-      try // close file
-      {
+   public void closeFile() {
+      try  {
          if ( output != null )
             output.close();
-      } // end try
-      catch ( IOException ioException )
-      {
+      } catch ( IOException ioException ) {
          System.err.println( "Error closing file." );
          System.exit( 1 );
-      } // end catch
-   } // end method closeFile
-} // end class CreateSequentialFile
+      }
+   }
+}
 
 /*************************************************************************
 * (C) Copyright 1992-2010 by Deitel & Associates, Inc. and               *

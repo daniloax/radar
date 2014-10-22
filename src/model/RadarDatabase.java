@@ -29,15 +29,15 @@ public class RadarDatabase {
 			return false;		
 	}
 	
-	public Coordinate getLatitude(int account) {
-		return getAccount(account).getLatitude();
-	}
-	
-	public Coordinate getLongitudeCoordinate(int account) {
+	public double getLongitude(int account) {
 		return getAccount(account).getLongitude();
 	}
 	
-	public void updatePosition(int account, Double longitude, Double latitude ) {
+	public double getLatitude(int account) {
+		return getAccount(account).getLatitude();
+	}
+	
+	public void setPosition(int account, Double longitude, Double latitude ) {
 		getAccount(account).setPosition(longitude, latitude);
 	}
 	
