@@ -1,10 +1,12 @@
-package model;
+package control;
 
 import java.io.FileNotFoundException;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import model.Account;
 
 public class CreateTextFile
 {

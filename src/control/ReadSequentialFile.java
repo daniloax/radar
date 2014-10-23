@@ -1,10 +1,12 @@
-package model;
+package control;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.List;
+
+import model.Account;
 
 public class ReadSequentialFile {
 	

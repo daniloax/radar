@@ -1,11 +1,11 @@
-package model;
+package control;
 
-public class CreateSequentialFileTest {
+public class CreateTextFileTest {
    public static void main( String[] args ) {
-      CreateSequentialFile application = new CreateSequentialFile();
+      CreateTextFile application = new CreateTextFile();
 
       application.openFile();
       application.addRecords();
       application.closeFile();
    }
-}
+} 

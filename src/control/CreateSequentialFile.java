@@ -1,10 +1,15 @@
-package model;
+package control;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import model.Account;
+import model.Latitude;
+import model.Longitude;
+import model.Position;
 
 public class CreateSequentialFile
 {

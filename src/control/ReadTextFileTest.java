@@ -1,4 +1,4 @@
-package model;
+package control;
 
 public class ReadTextFileTest {
 	public static void main( String[] args ) {
