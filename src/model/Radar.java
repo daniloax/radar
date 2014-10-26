@@ -6,6 +6,7 @@ import control.CellView;
 import control.PositionUpdate;
 import control.RadarView;
 import control.Transaction;
+import control.UserRequest;
 
 public class Radar {
 
@@ -34,12 +35,17 @@ public class Radar {
 
 		while (true) {
 
-			while (!userAuthenticated) {
-
-				screen.displayMessageLine("\nWelcome!");
+			screen.displayMessageLine("\nWelcome!");
+			
+			userRequest();
+			
+			radarDatabase.readRecords();
+			
+			while (!userAuthenticated)
 				authenticateUser();
 
-			}
+			screen.displayMessageLine(String.format("\nHello, %s!",
+					radarDatabase.getUser(currentAccountNumber)));
 
 			performTransactions();
 			userAuthenticated = false;
@@ -48,6 +54,10 @@ public class Radar {
 
 		}
 
+	}
+	
+	private void userRequest() {
+		radarDatabase.getUserRequest();
 	}
 
 	private void authenticateUser() {
@@ -66,6 +76,41 @@ public class Radar {
 			screen.displayMessageLine("Invalid account number or password. Please try again.");
 
 	}
+	
+	private void performMenuOtions() {
+
+		Transaction currentTransaction = null;
+
+		boolean userExited = false;
+
+		while (!userExited) {
+
+			int mainMenuSelection = displayMainMenu();
+
+			switch (mainMenuSelection) {
+
+				case CELL_VIEW:
+				case RADAR_VIEW:
+				case POSITION_UPDATE:
+					currentTransaction = createTransaction(mainMenuSelection);
+					currentTransaction.execute();
+					break;
+	
+				case EXIT:
+					screen.displayMessageLine("\nExiting the system...");
+					userExited = true;
+					break;
+	
+				default:
+					screen.displayMessageLine("\nYou did not enter a valid selection. Try again.");
+					break;
+
+			}
+
+		}
+
+	}
+
 
 	private void performTransactions() {
 

@@ -1,14 +1,15 @@
 package model;
 
-public enum MenuOption {
+public enum MenuRadar {
 
    SIGN_IN( 1 ),
    SIGN_UP( 2 ),
-   END( 3 );
+   SIGN_OUT( 3 ),
+   END( 4 );
 
    private final int value;
 
-   MenuOption( int valueOption ) {
+   MenuRadar( int valueOption ) {
       value = valueOption;
    }
 

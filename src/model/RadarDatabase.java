@@ -3,19 +3,24 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import control.CreateTextFile;
 import control.ReadTextFile;
+import control.UserRequest;
 
 public class RadarDatabase {
 
 	private List<Account> accounts;
 	private ReadTextFile database;
+	private UserRequest userRequest;
 	
 	public RadarDatabase() {
 		accounts = new ArrayList<Account>();
 		database = new ReadTextFile();
-		database.openFile();
-		database.readRecords(accounts);
-		database.closeFile();
+		userRequest = new UserRequest();
+	}
+	
+	public String getUser(int account) {
+		return getAccount(account).getUser();
 	}
 	
 	private Account getAccount(int account) {
@@ -46,6 +51,16 @@ public class RadarDatabase {
 	
 	public void setPosition(int account, Double longitude, Double latitude ) {
 		getAccount(account).setPosition(longitude, latitude);
+	}
+	
+	public void getUserRequest() {
+		userRequest.processRequests();
+	}
+	
+	public void readRecords() {
+		database.openFile();
+		database.readRecords(accounts);
+		database.closeFile();
 	}
 	
 }
