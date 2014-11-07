@@ -81,9 +81,9 @@ public class Account implements Serializable {
 	
 	public void setPosition(Double longitude, Double latitude) {
 		if (longitude != null)
-			this.position.x = new Longitude(longitude);
+			this.position.x.setValue(longitude);
 		if (latitude != null)
-			this.position.y = new Latitude(latitude);
+			this.position.y.setValue(latitude);
 	}
 	
 	public boolean validatePassword(int password) {
