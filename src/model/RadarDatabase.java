@@ -11,12 +11,10 @@ public class RadarDatabase {
 
 	private List<Account> accounts;
 	private ReadTextFile database;
-	private UserRequest userRequest;
 	
 	public RadarDatabase() {
 		accounts = new ArrayList<Account>();
 		database = new ReadTextFile();
-		userRequest = new UserRequest();
 	}
 	
 	public String getUser(int account) {
@@ -51,10 +49,6 @@ public class RadarDatabase {
 	
 	public void setPosition(int account, Double longitude, Double latitude ) {
 		getAccount(account).setPosition(longitude, latitude);
-	}
-	
-	public void getUserRequest() {
-		userRequest.processRequests();
 	}
 	
 	public void readRecords() {

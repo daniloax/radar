@@ -74,7 +74,7 @@ public class CreateSequentialFile
 			
 			} catch ( NoSuchElementException elementException ) {
 				
-				System.err.println( "Invalid input. Please try again." );
+				System.err.println( "Invalid input." );
 				input.nextLine();
 			
 			}

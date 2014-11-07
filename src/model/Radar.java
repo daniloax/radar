@@ -15,6 +15,7 @@ public class Radar {
 	private Screen screen;
 	private Keypad keypad;
 	private RadarDatabase radarDatabase;
+	private UserRequest userRequest;
 
 	private static final int CELL_VIEW = 1;
 	private static final int RADAR_VIEW = 2;
@@ -28,6 +29,7 @@ public class Radar {
 		screen = new Screen();
 		keypad = new Keypad();
 		radarDatabase = new RadarDatabase();
+		userRequest = new UserRequest();
 
 	}
 
@@ -37,7 +39,7 @@ public class Radar {
 
 			screen.displayMessageLine("\nWelcome!");
 			
-			userRequest();
+			userRequest.processRequests();
 			
 			radarDatabase.readRecords();
 			
@@ -54,10 +56,6 @@ public class Radar {
 
 		}
 
-	}
-	
-	private void userRequest() {
-		radarDatabase.getUserRequest();
 	}
 
 	private void authenticateUser() {
@@ -164,17 +162,19 @@ public class Radar {
 		Transaction temp = null;
 
 		switch (type) {
-
-		case POSITION_UPDATE:
-			temp = new PositionUpdate(currentAccountNumber, screen, radarDatabase, keypad);
-			break;
-		case RADAR_VIEW:
-			temp = new RadarView(currentAccountNumber, screen, radarDatabase);
-			break;
-		case CELL_VIEW:
-			temp = new CellView(currentAccountNumber, screen, radarDatabase);
-			break;
-
+		
+			case CELL_VIEW:
+				temp = new CellView(currentAccountNumber, screen, radarDatabase);
+				break;
+				
+			case RADAR_VIEW:
+				temp = new RadarView(currentAccountNumber, screen, radarDatabase);
+				break;
+	
+			case POSITION_UPDATE:
+				temp = new PositionUpdate(currentAccountNumber, screen, radarDatabase, keypad);
+				break;
+		
 		}
 
 		return temp;

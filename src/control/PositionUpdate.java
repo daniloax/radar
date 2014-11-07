@@ -1,5 +1,8 @@
 package control;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+
 import model.RadarDatabase;
 import view.Keypad;
 import view.Screen;
@@ -52,32 +55,44 @@ public class PositionUpdate extends Transaction {
 		Screen screen = getScreen();
 
 		while (userChoice == 0) {
-			screen.displayMessageLine("\nCoordinate Update Menu:");
+			
+			screen.displayMessageLine("\nPosition Update Menu:");
 			screen.displayMessageLine("1 - Longitude");
 			screen.displayMessageLine("2 - Latitude");
 			screen.displayMessageLine("3 - Cancel transaction");
 			screen.displayMessage("\nChoose a coordinate update option: ");
 
-			int input = keypad.getInput();
+			try {
 
-			switch (input) {
-
-				case 1:
-					userChoice = input;
-					screen.displayMessage("\nLongitude coordinate: ");
-					longitude = getLongitude();
-					break;
-				case 2:
-					userChoice = input;
-					screen.displayMessage("\nLatitude coordinate: ");
-					latitude = getLatitude();
-					break;
-				case CANCELED:
-					userChoice = CANCELED;
-					break;
-				default:
-					screen.displayMessageLine("\nInvalid selection. Try again.");
+				int input = keypad.getInput();
 	
+				switch (input) {
+	
+					case 1:
+						userChoice = input;
+						screen.displayMessage("\nLongitude coordinate: ");
+						longitude = getLongitude();
+						break;
+					
+					case 2:
+						userChoice = input;
+						screen.displayMessage("\nLatitude coordinate: ");
+						latitude = getLatitude();
+						break;
+					
+					case CANCELED:
+						userChoice = CANCELED;
+						break;
+					
+					default:
+						screen.displayMessageLine("\nInvalid selection. Try again.");
+		
+				}
+				
+			} catch ( InputMismatchException inputException ) {
+				
+				System.err.println( "Invalid input. Please try again." );
+				System.exit( 1 );
 			}
 
 		}
