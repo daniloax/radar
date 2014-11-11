@@ -24,7 +24,7 @@ public class ReadSequentialFile {
 		
 		Account record;
 		System.out.printf( "%-10s%-12s%-12s%-12s%10s\n", "Account",
-				"User Name", "Password", "Longitude", "Latitude" );
+				"Password", "User Name", "Longitude", "Latitude" );
 
 		try { 
 
@@ -33,7 +33,7 @@ public class ReadSequentialFile {
 				record = ( Account ) input.readObject();
 
 				System.out.printf( "%-10d%-12s%-12d%-12.4f%10.4f\n",
-						record.getAccount(), record.getUser(), record.getPassword(),
+						record.getAccount(), record.getPassword(), record.getCell().getName(),
 						record.getPosition().x.getValue(), record.getPosition().y.getValue() );
 
 			}
@@ -51,7 +51,7 @@ public class ReadSequentialFile {
 		
 		Account record;
 		System.out.printf( "%-10s%-12s%-12s%-12s%10s\n", "Account",
-				"User Name", "Password", "Longitude", "Latitude" );
+				"Password", "User Name", "Longitude", "Latitude" );
 
 		try { 
 
@@ -61,7 +61,7 @@ public class ReadSequentialFile {
 				accounts.add(record);
 
 				System.out.printf( "%-10d%-12s%-12d%-12.4f%10.4f\n",
-						record.getAccount(), record.getUser(), record.getPassword(),
+						record.getAccount(), record.getPassword(), record.getCell().getName(),
 						record.getPosition().x.getValue(), record.getPosition().y.getValue() );
 
 			}

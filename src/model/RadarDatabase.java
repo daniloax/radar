@@ -18,7 +18,7 @@ public class RadarDatabase {
 	}
 	
 	public String getUser(int account) {
-		return getAccount(account).getUser();
+		return getAccount(account).getCell().getName();
 	}
 	
 	private Account getAccount(int account) {

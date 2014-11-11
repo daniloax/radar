@@ -26,8 +26,8 @@ public class CreateSequentialFile
 	public void addRecords() {
 		Account record;
 		int accountNumber = 0;
-		String userName;
 		int password = 0;
+		String userName;
 		double longitude;
 		double latitude;
 		Position position;
@@ -41,7 +41,7 @@ public class CreateSequentialFile
 				"On Windows type <ctrl> z then press Enter" );
 
 		System.out.printf( "%s\n%s", 
-				"Enter account number (> 0), user name, password, longitude and latitude.",
+				"Enter account number (> 0), password, user name, longitude and latitude.",
 				"? " );
 
 		while ( input.hasNext() ) {
@@ -49,15 +49,15 @@ public class CreateSequentialFile
 			try {
 				
 				accountNumber = input.nextInt();
-				userName = input.next();
 				password = input.nextInt();
+				userName = input.next();
 				longitude = input.nextDouble();
 				latitude = input.nextDouble();
 				position = new Position(new Longitude(longitude), new Latitude(latitude));
 				
 				if ( accountNumber > 0 ) {
 					
-					record = new Account( accountNumber, userName, password, position );
+					record = new Account( accountNumber, password, userName, position );
 					output.writeObject( record );
 				
 				} else {
@@ -80,7 +80,7 @@ public class CreateSequentialFile
 			}
 
 			System.out.printf( "%s %s\n%s", "Enter account number (> 0),",
-					"user name, password, longitude and latitude.", "? " );
+					"password, user name, longitude and latitude.", "? " );
 		
 		}
 	

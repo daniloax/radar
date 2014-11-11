@@ -5,29 +5,32 @@ import java.io.Serializable;
 public class Account implements Serializable {
 	
 	private int accountNumber;
-	private String user;
 	private int password;
+	
+	private Cell cell;
 	private Longitude longitude;
 	private Latitude latitude;
 	private Position<Longitude, Latitude> position;
 	
 	public Account() {
+		cell = new Cell();
 		longitude = new Longitude();
 		latitude = new Latitude();
 		position = new Position<Longitude, Latitude>(longitude, latitude);
 	}
 	
-	public Account(int accountNumber, String user, int password, double latitude, double longitude) {
+	public Account(int accountNumber, int password, String name, double longitude, double latitude) {
 		this.accountNumber = accountNumber;
-		this.user = user;
 		this.password = password;
-		this.position = new Position<Longitude, Latitude>(new Longitude(longitude), new Latitude(latitude));
+		this.cell.setName(name);
+		this.position.x.setValue(longitude);
+		this.position.y.setValue(latitude);
 	}
 	
-	public Account( int accountNumber , String user , int password, Position<Longitude, Latitude> position) {
+	public Account( int accountNumber, int password, String name, Position<Longitude, Latitude> position) {
 		this.accountNumber = accountNumber;
-		this.user = user;
 		this.password = password;
+		this.cell.setName(name);
 		this.position = position;
 	}
 
@@ -38,13 +41,13 @@ public class Account implements Serializable {
 	public void setAccount(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-
-	public String getUser() {
-		return user;
+	
+	public Cell getCell() {
+		return cell;
 	}
-
-	public void setUser(String user) {
-		this.user = user;
+	
+	public void setCell(Cell cell) {
+		this.cell = cell;
 	}
 
 	public int getPassword() {

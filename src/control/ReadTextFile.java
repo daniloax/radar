@@ -26,18 +26,18 @@ public class ReadTextFile {
 		Account record = new Account();
 
 		System.out.printf( "%-10s%-12s%-12s%-12s%10s\n", "Account",
-				"User Name", "Password", "Longitude", "Latitude" );
+				"Password", "User Name", "Longitude", "Latitude" );
 
 		try {
 			while ( input.hasNext() ) {
 				record.setAccount( input.nextInt() );
-				record.setUser( input.next() );
 				record.setPassword( input.nextInt() );
+				record.getCell().setName( input.next() );
 				record.setLongitude(input.nextDouble());
 				record.setLatitude(input.nextDouble());
 
 				System.out.printf( "%-10d%-12s%-12d%-12.4f%10.4f\n",
-						record.getAccount(), record.getUser(), record.getPassword(),
+						record.getAccount(), record.getPassword(), record.getCell().getName(),
 						record.getLongitude(), record.getLatitude() );
 			}
 		}  catch ( NoSuchElementException elementException ) {
@@ -58,8 +58,8 @@ public class ReadTextFile {
 			while ( input.hasNext() ) {
 				record = new Account();
 				record.setAccount( input.nextInt() );
-				record.setUser( input.next() );
 				record.setPassword( input.nextInt() );
+				record.getCell().setName( input.next() );
 				record.setLongitude(input.nextDouble());
 				record.setLatitude(input.nextDouble());
 				accounts.add(record);				

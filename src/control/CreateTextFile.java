@@ -45,14 +45,14 @@ public class CreateTextFile
 			try {
 
 				record.setAccount( input.nextInt() );
-				record.setUser( input.next() );
+				record.getCell().setName( input.next() );
 				record.setLongitude(input.nextDouble());
 				record.setLatitude(input.nextDouble());
 
 				if ( record.getAccount() > 0 ) {
 
 					output.format( "%d %s %.4f %.4f\n", record.getAccount(), 
-							record.getUser(), record.getPosition().x.getValue(),
+							record.getCell().getName(), record.getPosition().x.getValue(),
 							record.getPosition().y.getValue() );
 				} else {
 					System.out.println("Account number must be greater than 0." );

@@ -109,7 +109,6 @@ public class Radar {
 
 	}
 
-
 	private void performTransactions() {
 
 		Transaction currentTransaction = null;
