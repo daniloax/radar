@@ -1,16 +1,23 @@
 package model;
 
-import java.io.Serializable;
+public class Latitude {
 
-public class Latitude extends Coordinate {
-
+	private double value;
+	
 	public Latitude() {
 
 	}
 	
 	public Latitude(double value) {
-		super(value);
+		this.value = (value >= -90.0 && value <= 90.0) ? value : 0.0;
 	}
 	
+	public double getValue() {
+		return value;
+	}
+	
+	public void setValue(double value) {
+		this.value = (value >= -90.0 && value <= 90.0) ? value : 0.0;
+	}
 
 }

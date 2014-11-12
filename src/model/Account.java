@@ -8,30 +8,24 @@ public class Account implements Serializable {
 	private int password;
 	
 	private Cell cell;
-	private Longitude longitude;
-	private Latitude latitude;
-	private Position<Longitude, Latitude> position;
 	
 	public Account() {
 		cell = new Cell();
-		longitude = new Longitude();
-		latitude = new Latitude();
-		position = new Position<Longitude, Latitude>(longitude, latitude);
 	}
 	
 	public Account(int accountNumber, int password, String name, double longitude, double latitude) {
 		this.accountNumber = accountNumber;
 		this.password = password;
 		this.cell.setName(name);
-		this.position.x.setValue(longitude);
-		this.position.y.setValue(latitude);
+		this.cell.getPosition().x.setValue(longitude);
+		this.cell.getPosition().y.setValue(latitude);
 	}
 	
 	public Account( int accountNumber, int password, String name, Position<Longitude, Latitude> position) {
 		this.accountNumber = accountNumber;
 		this.password = password;
 		this.cell.setName(name);
-		this.position = position;
+		this.cell.setPosition(position);
 	}
 
 	public int getAccount() {
@@ -59,34 +53,34 @@ public class Account implements Serializable {
 	}
 	
 	public double getLongitude() {
-		return longitude.getValue();
+		return cell.getLongitude().getValue();
 	}
 
 	public void setLongitude(double longitude) {
-		this.longitude.setValue(longitude);
+		this.cell.getLongitude().setValue(longitude);
 	}
 
 	public double getLatitude() {
-		return latitude.getValue();
+		return cell.getLatitude().getValue();
 	}
 
 	public void setLatitude(double latitude) {
-		this.latitude.setValue(latitude);
+		this.cell.getLatitude().setValue(latitude);
 	}
 
 	public Position<Longitude, Latitude> getPosition() {
-		return position;
+		return cell.getPosition();
 	}
 	
 	public void setPosition(Position<Longitude, Latitude> position) {
-		this.position = position;
+		this.cell.setPosition(position);
 	}
 	
 	public void setPosition(Double longitude, Double latitude) {
 		if (longitude != null)
-			this.position.x.setValue(longitude);
+			this.cell.getPosition().x.setValue(longitude);
 		if (latitude != null)
-			this.position.y.setValue(latitude);
+			this.cell.getPosition().y.setValue(latitude);
 	}
 	
 	public boolean validatePassword(int password) {

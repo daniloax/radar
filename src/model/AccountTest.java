@@ -16,7 +16,7 @@ public class AccountTest {
 		
 		account.setPosition(new Position<Longitude, Latitude>(x, y));
 		
-		System.out.printf("\nLongitude: %.4f\nLatitude: %.4f", account.getPosition().x.getValue(), account.getPosition().y.getValue());
+		System.out.printf("\nLongitude: %.4f\nLatitude: %.4f", account.getLongitude(), account.getLatitude());
 		
 	}
 
