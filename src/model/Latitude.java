@@ -1,23 +1,18 @@
 package model;
 
-public class Latitude {
-
-	private double value;
+public class Latitude extends Coordinate {
 	
 	public Latitude() {
-
+		super();
 	}
 	
 	public Latitude(double value) {
-		this.value = (value >= -90.0 && value <= 90.0) ? value : 0.0;
+		super((value >= -90.0 && value <= 90.0) ? value : 0.0);
 	}
 	
-	public double getValue() {
-		return value;
-	}
-	
+	@Override
 	public void setValue(double value) {
-		this.value = (value >= -90.0 && value <= 90.0) ? value : 0.0;
+		super.setValue((value >= -90.0 && value <= 90.0) ? value : 0.0);
 	}
 
 }
