@@ -1,6 +1,7 @@
 package view;
 
 import model.Cell;
+import model.Coordinate;
 
 public class Screen {
 
@@ -12,12 +13,12 @@ public class Screen {
 		System.out.println(message);
 	}
 	
-	public void displayCoordinate(double coordinate) {
-		System.out.printf("%,.4fº", coordinate);
-	}
-	
 	public void displayCell(Cell cell) {
 		System.out.print(cell.toString());
+	}
+	
+	public void displayCoordinate(Coordinate coordinate) {
+		System.out.printf("%,.4fº", coordinate.getValue());
 	}
 	
 }
