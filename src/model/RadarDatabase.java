@@ -39,6 +39,10 @@ public class RadarDatabase {
 			return false;		
 	}
 	
+	public Cell getCell(int account) {
+		return getAccount(account).getCell();
+	}
+	
 	public double getLongitude(int account) {
 		return getAccount(account).getLongitude();
 	}

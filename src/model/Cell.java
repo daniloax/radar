@@ -71,5 +71,11 @@ public class Cell implements Serializable {
 		this.latitude.setValue(position.y.getValue());
 		this.position = position;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("\n%s\n\n%-25s%10s%10s\n%-25s%10.4f%10.4f\n",
+			"Cell View", "Name", "Longitude", "Latitude", name, longitude.getValue(), latitude.getValue());
+	}
 
 }

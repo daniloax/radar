@@ -12,14 +12,11 @@ public class CellView extends Transaction {
 	
 	@Override
 	public void execute() {
+		
 		RadarDatabase radarDatabase = getRadarDatabase();
 		Screen screen = getScreen();
 		
-		screen.displayMessageLine("\nPosition Information:");
-		screen.displayMessage(" - Current longitude: ");
-		screen.displayCoordinate(radarDatabase.getLongitude(getAccountNumber()));
-		screen.displayMessage("\n - Current latitude: ");
-		screen.displayCoordinate(radarDatabase.getLatitude(getAccountNumber()));
-		screen.displayMessageLine("");
+		screen.displayCell(radarDatabase.getCell(getAccountNumber()));
+		
 	}
 }
