@@ -10,7 +10,7 @@
 package model;
 
 /**
- * Programa de driver para o estudo do Radar
+ * Programa de driver para o estudo de caso do Radar
  * 
  * 
  * @author ska
