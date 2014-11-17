@@ -1,15 +1,15 @@
 package model;
 
-public enum MenuRadar {
+public enum MainMenu {
 
-   SIGN_IN( 1 ),
-   SIGN_UP( 2 ),
-   SIGN_OUT( 3 ),
-   END( 4 );
+   CELL_VIEW( 1 ),
+   RADAR_VIEW( 2 ),
+   POSITION_UPDATE( 3 ),
+   EXIT( 4 );
 
    private final int value;
 
-   MenuRadar( int valueOption ) {
+   MainMenu( int valueOption ) {
       value = valueOption;
    }
 

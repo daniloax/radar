@@ -1,3 +1,12 @@
+/*
+ * Radar
+ * ---------------------------------
+ *  version: 0.0.0
+ *  date: Nov 16, 2014
+ *  author: ska
+ *  list of changes: (none) 
+ */
+
 package model;
 
 import view.Keypad;
@@ -6,22 +15,29 @@ import control.CellView;
 import control.PositionUpdate;
 import control.RadarView;
 import control.Transaction;
-import control.UserRequest;
 
+/**
+ * Representa um Radar
+ * 
+ * 
+ * @author ska
+ */
 public class Radar {
 
-	private boolean userAuthenticated;
-	private int currentAccountNumber;
-	private Screen screen;
-	private Keypad keypad;
-	private RadarDatabase radarDatabase;
-	private UserRequest userRequest;
-
-	private static final int CELL_VIEW = 1;
-	private static final int RADAR_VIEW = 2;
-	private static final int POSITION_UPDATE = 3;
-	private static final int EXIT = 4;
-
+	private boolean userAuthenticated; // se usuário foi autenticado
+	private int currentAccountNumber; // número atual da conta do usuário
+	
+	private Screen screen; // tela do radar
+	private Keypad keypad; // teclado do radar
+	private RadarDatabase radarDatabase; // banco de dados com informações sobre as contas
+	
+	private final static MenuOption[] menuOption = { MenuOption.SIGN_IN, MenuOption.SIGN_UP, MenuOption.END };
+	private final static MainMenu[] mainMenuOption = { MainMenu.CELL_VIEW, MainMenu.RADAR_VIEW, MainMenu.POSITION_UPDATE, MainMenu.EXIT };
+	
+	/**	
+	 * construtor sem argumentos de Radar inicializa as variáveis de instância
+	 *
+	 */
 	public Radar() {
 
 		userAuthenticated = false;
@@ -29,19 +45,19 @@ public class Radar {
 		screen = new Screen();
 		keypad = new Keypad();
 		radarDatabase = new RadarDatabase();
-		userRequest = new UserRequest();
 
 	}
-
+	
+	/**	
+	 * inicia o radar
+	 *
+	 */
 	public void run() {
 
 		while (true) {
 
 			screen.displayMessageLine("\nWelcome!");
-			
-			userRequest.processRequests();
-			
-			radarDatabase.readRecords();
+			processRequests();
 			
 			while (!userAuthenticated)
 				authenticateUser();
@@ -52,12 +68,15 @@ public class Radar {
 			performTransactions();
 			userAuthenticated = false;
 			currentAccountNumber = 0;
-			screen.displayMessage("\nGoodbye!");
 
 		}
 
 	}
 
+	/**	
+	 * tenta autenticar o usuário contra o banco de dados
+	 *
+	 */
 	private void authenticateUser() {
 
 		screen.displayMessage("\nPlease enter your account number: ");
@@ -75,75 +94,58 @@ public class Radar {
 
 	}
 	
-	private void performMenuOtions() {
-
-		Transaction currentTransaction = null;
-
-		boolean userExited = false;
-
-		while (!userExited) {
-
-			int mainMenuSelection = displayMainMenu();
-
-			switch (mainMenuSelection) {
-
-				case CELL_VIEW:
-				case RADAR_VIEW:
-				case POSITION_UPDATE:
-					currentTransaction = createTransaction(mainMenuSelection);
-					currentTransaction.execute();
-					break;
+	/**	
+	 * exibe o menu inicial e retorna uma seleção de entrada
+	 *
+	 */
+	private MenuOption displayStartMenu() {
+		
+		screen.displayMessageLine("\nMenu option");
+		screen.displayMessageLine(" 1 - Sign in");
+		screen.displayMessageLine(" 2 - Sign up");
+		screen.displayMessageLine(" 3 - End of run");
+		screen.displayMessage( "\n? " );
+		
+		return menuOption[ keypad.getInput() - 1 ];
+		
+	}
 	
-				case EXIT:
-					screen.displayMessageLine("\nExiting the system...");
-					userExited = true;
-					break;
-	
-				default:
-					screen.displayMessageLine("\nYou did not enter a valid selection. Try again.");
-					break;
+	/**	
+	 * executa o menu inicial e processa requisições
+	 *
+	 */
+	private void processRequests() {
+		
+		MenuOption menuOption = displayStartMenu();
 
-			}
-
+		switch ( menuOption ) {
+		
+			case SIGN_IN:
+				radarDatabase.readRecords();
+				break;
+			
+			case SIGN_UP:
+				radarDatabase.addRecords();
+				radarDatabase.readRecords();
+				break;
+				
+			case END:
+				screen.displayMessageLine("\nExiting the system...");
+				System.exit( 1 );
+			
+			default:
+				screen.displayMessageLine("\nYou did not enter a valid selection. Try again.");
+				break;
+		
 		}
 
-	}
-
-	private void performTransactions() {
-
-		Transaction currentTransaction = null;
-
-		boolean userExited = false;
-
-		while (!userExited) {
-
-			int mainMenuSelection = displayMainMenu();
-
-			switch (mainMenuSelection) {
-
-				case CELL_VIEW:
-				case RADAR_VIEW:
-				case POSITION_UPDATE:
-					currentTransaction = createTransaction(mainMenuSelection);
-					currentTransaction.execute();
-					break;
+	}	
 	
-				case EXIT:
-					screen.displayMessageLine("\nExiting the system...");
-					userExited = true;
-					break;
-	
-				default:
-					screen.displayMessageLine("\nYou did not enter a valid selection. Try again.");
-					break;
-
-			}
-
-		}
-
-	}
-
-	private int displayMainMenu() {
+	/**	
+	 * exibe o menu principal e retorna uma seleção de entrada
+	 *
+	 */
+	private MainMenu displayMainMenu() {
 
 		screen.displayMessageLine("\nMain menu:");
 		screen.displayMessageLine("1 - Cell view");
@@ -152,11 +154,54 @@ public class Radar {
 		screen.displayMessageLine("4 - Exit\n");
 		screen.displayMessage("Enter a choise: ");
 
-		return keypad.getInput();
+		return mainMenuOption[keypad.getInput() - 1];
+
+	}
+	
+	/**	
+	 * executa o menu principal e realiza transações
+	 *
+	 */
+	private void performTransactions() {
+
+		boolean userExited = false;
+		
+		MainMenu mainMenuSelection;
+		Transaction currentTransaction = null;
+
+		while (!userExited) {
+
+			mainMenuSelection = displayMainMenu();
+
+			switch (mainMenuSelection) {
+
+				case CELL_VIEW:
+				case RADAR_VIEW:
+				case POSITION_UPDATE:
+					currentTransaction = createTransaction(mainMenuSelection);
+					currentTransaction.execute();
+					break;
+	
+				case EXIT:
+					screen.displayMessageLine("\nGoodbye!");
+					userExited = true;
+					break;
+	
+				default:
+					screen.displayMessageLine("\nYou did not enter a valid selection. Try again.");
+					break;
+
+			}
+
+		}
 
 	}
 
-	private Transaction createTransaction(int type) {
+	/**	
+	 * retorna o objeto da subclasse de Transaction especificada
+	 *
+	 */
+	private Transaction createTransaction(MainMenu type) {
 
 		Transaction temp = null;
 

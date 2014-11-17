@@ -1,3 +1,12 @@
+/*
+ * UserRequest
+ * ---------------------------------
+ *  version: 0.0.0
+ *  date: Nov 16, 2014
+ *  author: ska
+ *  list of changes: (none) 
+ */
+
 package control;
 
 import java.io.File;
@@ -8,6 +17,12 @@ import java.util.Scanner;
 import model.Account;
 import model.MenuOption;
 
+/**
+ * Esse programa lê um arquivo sequencialmente e exibe o conteúdo
+ * 
+ * 
+ * @author ska
+ */
 public class UserRequest {
 	
 	private CreateTextFile database;
@@ -15,6 +30,10 @@ public class UserRequest {
 	private Scanner input;
 	private final static MenuOption[] choices = { MenuOption.SIGN_IN, MenuOption.SIGN_UP, MenuOption.END };
 	
+	/**	
+	 * construtor sem argumentos de UserRequest inicializa database
+	 *
+	 */
 	public UserRequest() {
 		database = new CreateTextFile();
 	}
@@ -33,6 +52,7 @@ public class UserRequest {
 				record.getCell().setName( input.next() );
 				record.setLongitude( input.nextDouble() );
 				record.setLatitude( input.nextDouble() );
+				record.getCell().setRadius( input.nextDouble() );
 
 				System.out.printf( "%-10d%-12s%-12d%-12.2f%10.2f\n",
 						record.getAccount(), record.getPassword(), record.getCell().getName(),

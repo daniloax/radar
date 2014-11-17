@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Cell implements Serializable {
 	
+	private double radius;
 	private Longitude longitude;
 	private Latitude latitude;	
 	private Position<Longitude, Latitude> position;
@@ -34,6 +35,14 @@ public class Cell implements Serializable {
 		this.longitude.setValue(position.x.getValue());
 		this.latitude.setValue(position.y.getValue());
 		this.position = position;
+	}
+	
+	public double getRadius() {
+		return radius;
+	}
+	
+	public void setRadius(double radius) {
+		this.radius = (radius > 0.0 ? radius : 0.0);
 	}
 	
 	public String getName() {
@@ -74,8 +83,9 @@ public class Cell implements Serializable {
 	
 	@Override
 	public String toString() {
-		return String.format("\n%s\n\n%-25s%10s%10s\n%-25s%10.4f%10.4f\n",
-			"Cell View", "Name", "Longitude", "Latitude", name, longitude.getValue(), latitude.getValue());
+		return String.format("\n%s\n\n%-7s%9s%12s%10s\n%-7s%9.4f%12.4f%10.2f\n",
+			"Cell View", "Name", "Longitude", "Latitude", "Radius",
+			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius);
 	}
 
 }

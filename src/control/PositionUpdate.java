@@ -101,11 +101,11 @@ public class PositionUpdate extends Transaction {
 
 	}
 	
-	private double getLongitude() {
+	private Double getLongitude() {
 		return keypad.getCoodinate();
 	}
 	
-	private double getLatitude() {
+	private Double getLatitude() {
 		return keypad.getCoodinate();
 	}
 		

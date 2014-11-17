@@ -3,18 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import control.CreateTextFile;
-import control.ReadTextFile;
-import control.UserRequest;
-
 public class RadarDatabase {
 
+	private Database database;
 	private List<Account> accounts;
-	private ReadTextFile database;
 	
 	public RadarDatabase() {
 		accounts = new ArrayList<Account>();
-		database = new ReadTextFile();
+		database = new Database();
 	}
 	
 	public String getUser(int account) {
@@ -55,10 +51,12 @@ public class RadarDatabase {
 		getAccount(account).setPosition(longitude, latitude);
 	}
 	
+	public void addRecords() {
+		database.addRecords();
+	}
+	
 	public void readRecords() {
-		database.openFile();
 		database.readRecords(accounts);
-		database.closeFile();
 	}
 	
 }

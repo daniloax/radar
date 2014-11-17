@@ -1,3 +1,12 @@
+/*
+ * CreateTextFile
+ * ---------------------------------
+ *  version: 0.0.0
+ *  date: Nov 16, 2014
+ *  author: ska
+ *  list of changes: (none) 
+ */
+
 package control;
 
 import java.io.FileNotFoundException;
@@ -8,13 +17,23 @@ import java.util.Scanner;
 
 import model.Account;
 
-public class CreateTextFile
-{
-	private Formatter output;
+/**
+ * Gravando dados em um arquivo de texto sequencial com a classe Formatter
+ * 
+ * 
+ * @author ska
+ */
+public class CreateTextFile {
+	
+	private Formatter output; // objeto usado para gerar saída de texto no arquivo
 
+	/**
+	 * Permite ao usuário abrir o arquivo
+	 * 
+	 */
 	public void openFile() {
 		try {
-			output = new Formatter( "radar.txt" );
+			output = new Formatter( "radar.txt" ); // abre arquivo
 		} catch ( SecurityException securityException ) {
 			System.err.println( "You do not have write access to this file." );
 			System.exit( 1 );
@@ -24,8 +43,13 @@ public class CreateTextFile
 		}
 	}
 
+	/**
+	 * Adiciona registros ao arquivo
+	 * 
+	 */
 	public void addRecords() {
 
+		// objeto a ser gravado no arquivo
 		Account record = new Account();
 
 		Scanner input = new Scanner( System.in );
@@ -42,18 +66,20 @@ public class CreateTextFile
 
 		while ( input.hasNext() ) {
 
-			try {
+			try { // gera saída dos valores para o arquivo
 
-				record.setAccount( input.nextInt() );
-				record.getCell().setName( input.next() );
-				record.setLongitude(input.nextDouble());
-				record.setLatitude(input.nextDouble());
+				record.setAccount( input.nextInt() ); // lê o número da conta
+				record.getCell().setName( input.next() ); // lê o nome da célula
+				record.setLongitude( input.nextDouble() ); // lê a longitude
+				record.setLatitude( input.nextDouble() ); // lê a latitude
+				record.getCell().setRadius( input.nextDouble() ); // lê o raio
 
 				if ( record.getAccount() > 0 ) {
 
-					output.format( "%d %s %.4f %.4f\n", record.getAccount(), 
-							record.getCell().getName(), record.getPosition().x.getValue(),
-							record.getPosition().y.getValue() );
+					// grava um novo registro
+					output.format( "%d %s %.4f %.4f %.2f\n", record.getAccount(), 
+							record.getCell().getName(), record.getLongitude(),
+							record.getLatitude(), record.getCell().getRadius() );
 				} else {
 					System.out.println("Account number must be greater than 0." );
 				}
@@ -71,6 +97,10 @@ public class CreateTextFile
 		}
 	}
 
+	/**
+	 * Fecha o arquivo
+	 * 
+	 */
 	public void closeFile() {
 		if ( output != null )
 			output.close();
