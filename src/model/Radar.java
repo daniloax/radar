@@ -14,6 +14,7 @@ import view.Screen;
 import control.CellView;
 import control.PositionUpdate;
 import control.RadarView;
+import control.RadiusUpdate;
 import control.Transaction;
 
 /**
@@ -32,7 +33,7 @@ public class Radar {
 	private RadarDatabase radarDatabase; // banco de dados com informações sobre as contas
 	
 	private final static MenuOption[] menuOption = { MenuOption.SIGN_IN, MenuOption.SIGN_UP, MenuOption.END };
-	private final static MainMenu[] mainMenuOption = { MainMenu.CELL_VIEW, MainMenu.RADAR_VIEW, MainMenu.POSITION_UPDATE, MainMenu.EXIT };
+	private final static MainMenu[] mainMenuOption = { MainMenu.CELL_VIEW, MainMenu.RADAR_VIEW, MainMenu.POSITION_UPDATE, MainMenu.RADIUS_UPDATE, MainMenu.EXIT };
 	
 	/**	
 	 * construtor sem argumentos de Radar inicializa as variáveis de instância
@@ -95,10 +96,10 @@ public class Radar {
 	}
 	
 	/**	
-	 * exibe o menu inicial e retorna uma seleção de entrada
+	 * exibe o menu de opções e retorna uma seleção de entrada
 	 *
 	 */
-	private MenuOption displayStartMenu() {
+	private MenuOption displayMenuOption() {
 		
 		screen.displayMessageLine("\nMenu option");
 		screen.displayMessageLine(" 1 - Sign in");
@@ -111,12 +112,12 @@ public class Radar {
 	}
 	
 	/**	
-	 * executa o menu inicial e processa requisições
+	 * executa o menu de opções e processa requisições
 	 *
 	 */
 	private void processRequests() {
 		
-		MenuOption menuOption = displayStartMenu();
+		MenuOption menuOption = displayMenuOption();
 
 		switch ( menuOption ) {
 		
@@ -151,7 +152,8 @@ public class Radar {
 		screen.displayMessageLine("1 - Cell view");
 		screen.displayMessageLine("2 - Radar view");
 		screen.displayMessageLine("3 - Position update");
-		screen.displayMessageLine("4 - Exit\n");
+		screen.displayMessageLine("4 - Radius update");
+		screen.displayMessageLine("5 - Exit\n");
 		screen.displayMessage("Enter a choise: ");
 
 		return mainMenuOption[keypad.getInput() - 1];
@@ -178,6 +180,7 @@ public class Radar {
 				case CELL_VIEW:
 				case RADAR_VIEW:
 				case POSITION_UPDATE:
+				case RADIUS_UPDATE:
 					currentTransaction = createTransaction(mainMenuSelection);
 					currentTransaction.execute();
 					break;
@@ -217,6 +220,10 @@ public class Radar {
 	
 			case POSITION_UPDATE:
 				temp = new PositionUpdate(currentAccountNumber, screen, radarDatabase, keypad);
+				break;
+				
+			case RADIUS_UPDATE:
+				temp = new RadiusUpdate(currentAccountNumber, screen, radarDatabase, keypad);
 				break;
 		
 		}
