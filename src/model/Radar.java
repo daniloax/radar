@@ -9,6 +9,9 @@
 
 package model;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+
 import view.Keypad;
 import view.Screen;
 import control.CellView;
@@ -100,14 +103,36 @@ public class Radar {
 	 *
 	 */
 	private MenuOption displayMenuOption() {
+			
+		int userType = 1;
 		
-		screen.displayMessageLine("\nMenu option");
-		screen.displayMessageLine(" 1 - Sign in");
-		screen.displayMessageLine(" 2 - Sign up");
-		screen.displayMessageLine(" 3 - End of run");
-		screen.displayMessage( "\n? " );
+		try {
 		
-		return menuOption[ keypad.getInput() - 1 ];
+			do {
+		
+				screen.displayMessageLine("\nMenu option");
+				screen.displayMessageLine(" 1 - Sign in");
+				screen.displayMessageLine(" 2 - Sign up");
+				screen.displayMessageLine(" 3 - End of run");
+				screen.displayMessage( "\n? " );
+				
+				userType = keypad.getInput();
+				
+			} while(userType < 1 || userType > 3);
+			
+		} catch (InputMismatchException inputMismatchException) {
+			
+			System.err.println("Invalid input.");
+			System.exit( 1 );
+		
+		} catch (NoSuchElementException elementException) {
+			
+			System.err.println( "Invalid input." );
+			System.exit( 1 );
+			
+		}
+		
+		return menuOption[ userType - 1 ];
 		
 	}
 	
@@ -148,15 +173,36 @@ public class Radar {
 	 */
 	private MainMenu displayMainMenu() {
 
-		screen.displayMessageLine("\nMain menu:");
-		screen.displayMessageLine("1 - Cell view");
-		screen.displayMessageLine("2 - Radar view");
-		screen.displayMessageLine("3 - Position update");
-		screen.displayMessageLine("4 - Radius update");
-		screen.displayMessageLine("5 - Exit\n");
-		screen.displayMessage("Enter a choise: ");
+		int userType = 1;
+		
+		try {
+			
+			do {
+		
+				screen.displayMessageLine("\nMain menu:");
+				screen.displayMessageLine("1 - Cell view");
+				screen.displayMessageLine("2 - Radar view");
+				screen.displayMessageLine("3 - Position update");
+				screen.displayMessageLine("4 - Radius update");
+				screen.displayMessageLine("5 - Exit\n");
+				screen.displayMessage("Enter a choise: ");
+				
+				userType = keypad.getInput();
+				
+			} while(userType < 1 || userType > 5);
+			
+		} catch (InputMismatchException inputMismatchException) {
+			
+			System.err.println("");
+		
+		} catch ( NoSuchElementException elementException ) {
+			
+			System.err.println( "Invalid input." );
+			System.exit( 1 );
+		
+		}
 
-		return mainMenuOption[keypad.getInput() - 1];
+		return mainMenuOption[userType - 1];
 
 	}
 	

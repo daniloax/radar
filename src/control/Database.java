@@ -1,9 +1,8 @@
-package model;
+package control;
 
 import java.util.List;
 
-import control.CreateTextFile;
-import control.ReadTextFile;
+import model.Account;
 
 public class Database {
 	
@@ -15,19 +14,19 @@ public class Database {
 		readTextFile = new ReadTextFile();
 	}
 	
-	protected void addRecords() {
+	public void addRecords() {
 		createTextFile.openFile();
 		createTextFile.addRecords();
 		createTextFile.closeFile();
 	}
 	
-	protected void readRecords() {
+	public void readRecords() {
 		readTextFile.openFile();
 		readTextFile.readRecords();
 		readTextFile.closeFile();
 	}
 	
-	protected void readRecords(List<Account> accounts) {
+	public void readRecords(List<Account> accounts) {
 		readTextFile.openFile();
 		readTextFile.readRecords(accounts);
 		readTextFile.closeFile();
