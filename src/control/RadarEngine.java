@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Account;
 import model.Cell;
 
 /**
@@ -19,13 +20,20 @@ import model.Cell;
  * @author rbonifacio
  */
 public class RadarEngine {
-	
+
 	private int height;
 	private int width;
-	
+
 	private Cell cell;
 	private Cell[][] cells;
+
 	private Statistics statistics;
+
+	private List<Account> accounts;
+	
+	private static final String OFF_CELL = "|       |";
+	private static final String ON_CELL = "|   o   |";
+
 
 	/**
 	 * Construtor da classe Environment.
@@ -52,7 +60,7 @@ public class RadarEngine {
 	 * c) em todos os outros casos a celula morre ou continua morta.
 	 */
 	public void nextGeneration() {
-		List<Cell> mustOn = new ArrayList<Cell>();
+		List<Cell> mustOn = 	new ArrayList<Cell>();
 		List<Cell> mustOff = new ArrayList<Cell>();
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -64,18 +72,18 @@ public class RadarEngine {
 				}
 			}
 		}
-		
+
 		for (Cell cell : mustOn) {
 			cell.setOn();
 			statistics.recordOn();
 		}
-		
+
 		for (Cell cell : mustOff) {
 			cell.setOff();
 			statistics.recordOff();
 		}
 	}
-	
+
 	/**
 	 * Torna a celula de posicao (i, j) viva
 	 * 
@@ -93,7 +101,7 @@ public class RadarEngine {
 			new InvalidParameterException("Invalid position (" + i + ", " + j + ")" );
 		}
 	}
-	
+
 	/**
 	 * Verifica se uma celula na posicao (i, j) estah viva.
 	 * 
@@ -140,21 +148,21 @@ public class RadarEngine {
 	}
 
 	/* verifica se uma celula deve (re)nascer */
-	public boolean shouldOn(int i, int j) {
+	private boolean shouldOn(int i, int j) {
 		if (cells[i][j] != null) {
 			if (cells[i][j] != cell) {
 				double xA = cell.getX();
 				double yA = cell.getY();
 				double raioA = cell.getRadius();
-				
+
 				double xB = cells[i][j].getX();
 				double yB = cells[i][j].getY();
-				
+
 				boolean isIn = (Math.pow((xB - xA), 2) + Math.pow((yB - yA), 2) - Math.pow(raioA, 2)) <= 0;
 				return isIn && !cells[i][j].isOn();
 			}
 			return !cells[i][j].isOn();
-		
+
 		} else
 			return false;
 
@@ -176,6 +184,61 @@ public class RadarEngine {
 		return on;
 	}
 
+	public void update() {
+		
+		int i, j;
+
+		for (i = height - 1; i >= 0; i--) {
+			for (j = width - 1; j >= 0; j--) {
+				if (shouldOn(i, j))
+					makeCellOn(i, j);
+
+				if (cell == cells[i][j]) {
+					System.out.printf("|   ");
+					System.err.print(isCellOn(i, j) ? "o" : " ");
+					System.out.printf("   |");
+				
+				} else
+					System.out.print(isCellOn(i, j) ? ON_CELL : OFF_CELL);
+			}
+			System.out.println("   " + ((i - width) * 15));
+
+		}
+
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	public void setMap() {
+
+		int i, j, dimension;
+		
+		dimension = 1;
+
+		if (cell.getRadius() / 15 >= 1)
+			dimension = 2 * dimension + 1;
+
+		else
+			dimension = 1;
+		
+		width = dimension;
+		height = dimension;
+
+		cells = new Cell[width][height];
+
+		for (Account account : accounts) {
+
+			i = Math.abs(account.getCell().getY() + height);
+			j = Math.abs(account.getCell().getX() + width);
+
+			if (validPosition(i, j))
+				cells[i][j] = account.getCell();
+
+		}	
+	}
+
 	/*
 	 * Verifica se uma posicao (a, b) referencia uma celula valida no tabuleiro.
 	 */
@@ -184,7 +247,7 @@ public class RadarEngine {
 	}
 
 	/* Metodos de acesso as propriedades height e width */
-	
+
 	public int getHeight() {
 		return height;
 	}
@@ -200,11 +263,11 @@ public class RadarEngine {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	
+
 	public void setCell(Cell cell) {
 		this.cell = cell;
 	}
-	
+
 	public void setCells(Cell[][] cells) {
 		this.cells = cells;
 	}

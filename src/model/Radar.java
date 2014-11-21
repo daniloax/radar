@@ -75,7 +75,7 @@ public class Radar {
 			while (!userAuthenticated)
 				authenticateUser();
 
-			screen.displayMessageLine(String.format("\nHello, %s!",
+			screen.displayMessageLine(String.format("\nOlá, %s!",
 					radarDatabase.getUser(currentAccountNumber)));
 
 			performTransactions();
