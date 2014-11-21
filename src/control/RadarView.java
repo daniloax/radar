@@ -61,22 +61,41 @@ public class RadarView extends Transaction {
 		engine.setHeight(dimension);
 		engine.setWidth(dimension);
 		
-		for (Account account : radarDatabase.getAccounts())
-			if(validPosition(account.getCell())) {
-				account.getCell().setOn();
-				cells[Math.abs(account.getCell().getRow() + dimension)][Math.abs(account.getCell().getColumn() + dimension)] = account.getCell();
-			}
+		int i, j;
 		
+		for (Account account : radarDatabase.getAccounts()) {
+			
+			i = Math.abs(account.getCell().getY() + dimension);
+			j = Math.abs(account.getCell().getX() + dimension);
+
+			if (validPosition(i, j))
+				cells[i][j] = account.getCell();
+			
+		}
+		
+		engine.setCell(cell);
 		engine.setCells(cells);
 		
 		printFirstRow();
 		printLine();
 		
-		for (int i = dimension - 1; i >= 0; i--) {
-			for (int j = dimension - 1; j >= 0; j--)
-				System.out.print(engine.isCellOn(i, j) ? ON_CELL : OFF_CELL);
+		for (i = dimension - 1; i >= 0; i--) {
 			
-			System.out.println("   " + (i - dimension) * 15);
+			for (j = dimension - 1; j >= 0; j--) {
+				
+				if (engine.shouldOn(i, j))
+					engine.makeCellOn(i, j);
+					
+				if (cell == cells[i][j]) {
+					System.out.printf("|   ");
+					System.err.print(engine.isCellOn(i, j) ? "o" : " ");
+					System.out.printf("   |");
+				} else
+					System.out.print(engine.isCellOn(i, j) ? ON_CELL : OFF_CELL);
+			
+			}
+			
+			System.out.println("   " + ((i - dimension) * 15));
 			printLine();
 		}
 		printOptions();
@@ -109,14 +128,14 @@ public class RadarView extends Transaction {
 		Scanner s = new Scanner(System.in);
 		
 		do {
+			
 			System.out.print("\n Inform the row number (0 - " + engine.getHeight() + "): " );
-			
 			i = s.nextInt();
-			
 			System.out.print("\n Inform the column number (0 - " + engine.getWidth() + "): " );
 			
 			j = s.nextInt();
-		}while(!validPosition(cell));
+		
+		} while(!validPosition(i, j));
 		
 		controller.makeCellOn(i, j);
 	}
@@ -129,13 +148,9 @@ public class RadarView extends Transaction {
 		controller.halt();
 	}
 	
-	private boolean validPosition(Cell cell) {
-		System.out.println(Math.abs(cell.getRow() + dimension));
-		System.out.println(Math.abs(cell.getColumn() + dimension));
-		return Math.abs(cell.getRow() + dimension) >= 0 && 
-				Math.abs(cell.getRow() + dimension) < dimension && 
-				Math.abs(cell.getColumn() + dimension) >= 0 && 
-				Math.abs(cell.getColumn() + dimension) < dimension;
+	private boolean validPosition(int i, int j) {
+		System.out.printf("%d,%d ", i - dimension , j -dimension );
+		return i >= 0 && i < dimension && j >= 0 && j < dimension;
 	}
 
 	private int parseOption(String option) {
@@ -164,7 +179,7 @@ public class RadarView extends Transaction {
 	 */
 	private void printFirstRow() {
 		System.out.println("\n \n");
-		for (int j = cell.getColumn() - 1; j <= cell.getColumn() + 1; j++) {
+		for (int j = cell.getX() - 1; j <= cell.getX() + 1; j++) {
 			System.out.printf("   %3d   ", j * 15);
 		}
 		System.out.print("\n");

@@ -22,6 +22,8 @@ public class RadarEngine {
 	
 	private int height;
 	private int width;
+	
+	private Cell cell;
 	private Cell[][] cells;
 	private Statistics statistics;
 
@@ -138,8 +140,24 @@ public class RadarEngine {
 	}
 
 	/* verifica se uma celula deve (re)nascer */
-	private boolean shouldOn(int i, int j) {
-		return (!cells[i][j].isOn()) && (numberOfNeighborhoodOnCells(i, j) == 3);
+	public boolean shouldOn(int i, int j) {
+		if (cells[i][j] != null) {
+			if (cells[i][j] != cell) {
+				double xA = cell.getX();
+				double yA = cell.getY();
+				double raioA = cell.getRadius();
+				
+				double xB = cells[i][j].getX();
+				double yB = cells[i][j].getY();
+				
+				boolean isIn = (Math.pow((xB - xA), 2) + Math.pow((yB - yA), 2) - Math.pow(raioA, 2)) <= 0;
+				return isIn && !cells[i][j].isOn();
+			}
+			return !cells[i][j].isOn();
+		
+		} else
+			return false;
+
 	}
 
 	/*
@@ -161,7 +179,7 @@ public class RadarEngine {
 	/*
 	 * Verifica se uma posicao (a, b) referencia uma celula valida no tabuleiro.
 	 */
-	private boolean validPosition(int a, int b) {
+	private boolean validPosition(int a, int b) {		
 		return a >= 0 && a < height && b >= 0 && b < width;
 	}
 
@@ -181,6 +199,10 @@ public class RadarEngine {
 
 	public void setWidth(int width) {
 		this.width = width;
+	}
+	
+	public void setCell(Cell cell) {
+		this.cell = cell;
 	}
 	
 	public void setCells(Cell[][] cells) {
