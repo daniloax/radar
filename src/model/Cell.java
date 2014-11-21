@@ -4,16 +4,24 @@ import java.io.Serializable;
 
 public class Cell implements Serializable {
 	
+	private boolean on;
 	private double radius;
+	private int row;
+	private int column;
+	
 	private Longitude longitude;
-	private Latitude latitude;	
+	private Latitude latitude;
 	private Position<Longitude, Latitude> position;
+	private Position<Integer, Integer> square;
 	private String name;
+	
+	private static final int UNIT = 15;
 	
 	public Cell() {
 		longitude = new Longitude();
 		latitude = new Latitude();
 		position = new Position<Longitude, Latitude>(longitude, latitude);
+		square = new Position<Integer, Integer>(column, row);
 	}
 	
 	public Cell(String name) {
@@ -21,6 +29,7 @@ public class Cell implements Serializable {
 		longitude = new Longitude();
 		latitude = new Latitude();
 		position = new Position<Longitude, Latitude>(longitude, latitude);
+		square = new Position<Integer, Integer>(column, row);
 	}
 	
 	public Cell(String name, Longitude longitude, Latitude latitude) {
@@ -28,6 +37,7 @@ public class Cell implements Serializable {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		position = new Position<Longitude, Latitude>(longitude, latitude);
+		setSquare();
 	}
 	
 	public Cell(String name, Position<Longitude, Latitude> position) {
@@ -35,14 +45,27 @@ public class Cell implements Serializable {
 		this.longitude.setValue(position.x.getValue());
 		this.latitude.setValue(position.y.getValue());
 		this.position = position;
+		setSquare();
 	}
 	
-	public double getRadius() {
-		return radius;
+	public boolean isOn() {
+		return on;
 	}
 	
-	public void setRadius(double radius) {
-		this.radius = (radius > 0.0 ? radius : 0.0);
+	public void setOff() {
+		this.on = false;
+	}
+	
+	public void setOn() {
+		this.on = true;
+	}
+	
+	public int getColumn() {
+		return column;
+	}
+	
+	public void setColumn(int column) {
+		this.column = column;
 	}
 	
 	public String getName() {
@@ -81,11 +104,42 @@ public class Cell implements Serializable {
 		this.position = position;
 	}
 	
+	public Position<Integer, Integer> getSquare() {
+		return square;
+	}
+	
+	public void setSquare() {
+		column = longitude.getValue() < 0 ? (int) (longitude.getValue() / (double) UNIT) - 1 : (int) (longitude.getValue() / (double) UNIT) + 1;
+		row = latitude.getValue() < 0 ? (int) (latitude.getValue() / (double) UNIT) - 1 : (int) (latitude.getValue() / (double) UNIT) + 1;
+		square.x = column;
+		square.y = row;
+	}
+	
+	public void setSquare(Position<Integer, Integer> square) {
+		this.square = square;
+	}
+	
+	public double getRadius() {
+		return radius;
+	}
+	
+	public void setRadius(double radius) {
+		this.radius = (radius > 0.0 ? radius : 0.0);
+	}
+	
+	public int getRow() {
+		return row;
+	}
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
 	@Override
 	public String toString() {
-		return String.format("\n%s\n\n%-7s%9s%12s%10s\n%-7s%9.4f%12.4f%10.2f\n",
-			"Cell View", "Name", "Longitude", "Latitude", "Radius",
-			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius);
+		return String.format("\n%s\n\n%-17s%9s%12s%10s%10s\n%-17s%9.4f%12.4f%10.2f%7d,%2d\n",
+			"Cell View", "Name", "Longitude", "Latitude", "Radius", "Square",
+			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius, this.square.x, this.square.y);
 	}
 
 }

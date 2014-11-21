@@ -27,6 +27,10 @@ public class RadarDatabase {
 		return null;
 	}
 	
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+	
 	public boolean authenticateUser(int account, int password) {
 
 		Account userAccount = getAccount(account);

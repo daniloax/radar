@@ -16,8 +16,11 @@ import view.Keypad;
 import view.Screen;
 import control.CellView;
 import control.PositionUpdate;
+import control.RadarController;
+import control.RadarEngine;
 import control.RadarView;
 import control.RadiusUpdate;
+import control.Statistics;
 import control.Transaction;
 
 /**
@@ -35,6 +38,12 @@ public class Radar {
 	private Keypad keypad; // teclado do radar
 	private RadarDatabase radarDatabase; // banco de dados com informações sobre as contas
 	
+	private RadarController radarController;
+	private RadarEngine radarEngine;
+	private RadarView radar;
+	
+	private Statistics statistics;
+	
 	private final static MenuOption[] menuOption = { MenuOption.SIGN_IN, MenuOption.SIGN_UP, MenuOption.END };
 	private final static MainMenu[] mainMenuOption = { MainMenu.CELL_VIEW, MainMenu.RADAR_VIEW, MainMenu.POSITION_UPDATE, MainMenu.RADIUS_UPDATE, MainMenu.EXIT };
 	
@@ -43,13 +52,13 @@ public class Radar {
 	 *
 	 */
 	public Radar() {
-
 		userAuthenticated = false;
 		currentAccountNumber = 0;
 		screen = new Screen();
 		keypad = new Keypad();
 		radarDatabase = new RadarDatabase();
-
+		radarController = new RadarController();
+		statistics = new Statistics();
 	}
 	
 	/**	
@@ -261,7 +270,7 @@ public class Radar {
 				break;
 				
 			case RADAR_VIEW:
-				temp = new RadarView(currentAccountNumber, screen, radarDatabase);
+				temp = new RadarView(currentAccountNumber, screen, radarDatabase, keypad, radarController, radarEngine, statistics);
 				break;
 	
 			case POSITION_UPDATE:

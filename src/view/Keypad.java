@@ -18,4 +18,8 @@ public class Keypad {
 		return input.nextDouble();
 	}
 	
+	public String getLine() {
+		return input.nextLine();
+	}
+	
 }

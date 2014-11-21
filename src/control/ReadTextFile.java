@@ -25,8 +25,8 @@ public class ReadTextFile {
 
 		Account record = new Account();
 
-		System.out.printf( "%-10s%-11s%-7s%9s%12s%10s\n", "Account",
-				"Password", "Cell", "Longitude", "Latitude", "Radius" );
+		System.out.printf( "%-10s%-11s%-17s%9s%12s%10s%10s\n", "ACCOUNT",
+				"PASSWORD", "CELL", "LONGITUDE", "LATITUDE", "RADIUS", "SQUARE" );
 
 		try {
 			while ( input.hasNext() ) {
@@ -36,10 +36,11 @@ public class ReadTextFile {
 				record.setLongitude(input.nextDouble());
 				record.setLatitude(input.nextDouble());
 				record.getCell().setRadius(input.nextDouble());
+				record.getCell().setSquare();
 
-				System.out.printf( "%-10d%-11s%-7s%9.4f%12.4f%10.2f\n",
+				System.out.printf( "%-10d%-11s%-17s%9.4f%12.4f%10.2f%7d,%2d\n",
 						record.getAccount(), record.getPassword(), record.getCell().getName(),
-						record.getLongitude(), record.getLatitude(), record.getCell().getRadius() );
+						record.getLongitude(), record.getLatitude(), record.getCell().getRadius(), record.getCell().getSquare().x, record.getCell().getSquare().y );
 			}
 		}  catch ( NoSuchElementException elementException ) {
 			System.err.println( "File improperly formed." );
@@ -64,6 +65,7 @@ public class ReadTextFile {
 				record.setLongitude( input.nextDouble() );
 				record.setLatitude( input.nextDouble() );
 				record.getCell().setRadius( input.nextDouble() );
+				record.getCell().setSquare();
 				accounts.add(record);				
 			}
 		}  catch ( NoSuchElementException elementException ) {
