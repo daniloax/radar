@@ -13,7 +13,7 @@ public class Cell implements Serializable {
 	private Longitude longitude;
 	private Latitude latitude;
 	private Position<Longitude, Latitude> position;
-	private Position<Integer, Integer> square;
+	private Position<Integer, Integer> matrix;
 	private String name;
 	
 	private static final int UNIT = 15;
@@ -22,7 +22,7 @@ public class Cell implements Serializable {
 		longitude = new Longitude();
 		latitude = new Latitude();
 		position = new Position<Longitude, Latitude>(longitude, latitude);
-		square = new Position<Integer, Integer>(x, y);
+		matrix = new Position<Integer, Integer>(x, y);
 	}
 	
 	public Cell(String name) {
@@ -30,7 +30,7 @@ public class Cell implements Serializable {
 		longitude = new Longitude();
 		latitude = new Latitude();
 		position = new Position<Longitude, Latitude>(longitude, latitude);
-		square = new Position<Integer, Integer>(x, y);
+		matrix = new Position<Integer, Integer>(x, y);
 	}
 	
 	public Cell(String name, Longitude longitude, Latitude latitude) {
@@ -38,7 +38,7 @@ public class Cell implements Serializable {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		position = new Position<Longitude, Latitude>(longitude, latitude);
-		setSquare();
+		setMatrix();
 	}
 	
 	public Cell(String name, Position<Longitude, Latitude> position) {
@@ -46,7 +46,7 @@ public class Cell implements Serializable {
 		this.longitude.setValue(position.x.getValue());
 		this.latitude.setValue(position.y.getValue());
 		this.position = position;
-		setSquare();
+		setMatrix();
 	}
 	
 	public boolean isOn() {
@@ -97,8 +97,8 @@ public class Cell implements Serializable {
 		this.position = position;
 	}
 	
-	public Position<Integer, Integer> getSquare() {
-		return square;
+	public Position<Integer, Integer> getMatrix() {
+		return matrix;
 	}
 	
 	
@@ -119,15 +119,15 @@ public class Cell implements Serializable {
 	}
 	
 	
-	public void setSquare() {
+	public void setMatrix() {
 		x = longitude.getValue() < 0 ? (int) (longitude.getValue() / (double) UNIT) - 1 : (int) (longitude.getValue() / (double) UNIT) + 1;
 		y = latitude.getValue() < 0 ? (int) (latitude.getValue() / (double) UNIT) - 1 : (int) (latitude.getValue() / (double) UNIT) + 1;
-		square.x = x;
-		square.y = y;
+		matrix.x = x;
+		matrix.y = y;
 	}
 	
-	public void setSquare(Position<Integer, Integer> square) {
-		this.square = square;
+	public void setMatrix(Position<Integer, Integer> matrix) {
+		this.matrix = matrix;
 	}
 	
 	public double getRadius() {
@@ -141,8 +141,8 @@ public class Cell implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("\n%s\n\n%-17s%9s%12s%10s%10s\n%-17s%9.4f%12.4f%10.2f%7d,%2d\n",
-			"Cell View", "Name", "Longitude", "Latitude", "Radius", "Square",
-			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius, this.square.x, this.square.y);
+			"Cell View", "Name", "Longitude", "Latitude", "Radius", "Matrix",
+			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius, this.matrix.x, this.matrix.y);
 	}
 
 }

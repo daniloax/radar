@@ -24,7 +24,7 @@ public class RadarEngine {
 	private int height;
 	private int width;
 
-	private Cell cell;
+	private Cell center;
 	private Cell[][] cells;
 
 	private Statistics statistics;
@@ -149,17 +149,21 @@ public class RadarEngine {
 
 	/* verifica se uma celula deve (re)nascer */
 	private boolean shouldOn(int i, int j) {
+		
 		if (cells[i][j] != null) {
-			if (cells[i][j] != cell) {
-				double xA = cell.getX();
-				double yA = cell.getY();
-				double raioA = cell.getRadius();
+			
+			if (cells[i][j] != center) {
+				
+				double xA = center.getX();
+				double yA = center.getY();
+				double raioA = center.getRadius();
 
 				double xB = cells[i][j].getX();
 				double yB = cells[i][j].getY();
 
 				boolean isIn = (Math.pow((xB - xA), 2) + Math.pow((yB - yA), 2) - Math.pow(raioA, 2)) <= 0;
 				return isIn && !cells[i][j].isOn();
+			
 			}
 			return !cells[i][j].isOn();
 
@@ -190,16 +194,11 @@ public class RadarEngine {
 
 		for (i = height - 1; i >= 0; i--) {
 			for (j = width - 1; j >= 0; j--) {
+				
 				if (shouldOn(i, j))
 					makeCellOn(i, j);
 
-				if (cell == cells[i][j]) {
-					System.out.printf("|   ");
-					System.err.print(isCellOn(i, j) ? "o" : " ");
-					System.out.printf("   |");
-				
-				} else
-					System.out.print(isCellOn(i, j) ? ON_CELL : OFF_CELL);
+				System.out.print(isCellOn(i, j) ? ON_CELL : OFF_CELL);
 			}
 			System.out.println("   " + ((i - width) * 15));
 
@@ -217,7 +216,7 @@ public class RadarEngine {
 		
 		dimension = 1;
 
-		if (cell.getRadius() / 15 >= 1)
+		if (center.getRadius() / 15 >= 1)
 			dimension = 2 * dimension + 1;
 
 		else
@@ -229,12 +228,19 @@ public class RadarEngine {
 		cells = new Cell[width][height];
 
 		for (Account account : accounts) {
+			
+			i = account.getCell().getY();
+			j = account.getCell().getX();
+			
+			if (((center.getY() - 1 <= i) && (center.getY() + 1 > i)) && ((center.getX() - 1 <= j) && (center.getX()  + 1) > j)) {
+				
+				System.out.println(center);
+				System.out.println(account.getCell());
 
-			i = Math.abs(account.getCell().getY() + height);
-			j = Math.abs(account.getCell().getX() + width);
-
-			if (validPosition(i, j))
-				cells[i][j] = account.getCell();
+				if (validPosition(i - center.getY(), j - center.getX()))
+					cells[Math.abs(i + height)][Math.abs(j + width)] = account.getCell();
+					
+			}
 
 		}	
 	}
@@ -242,8 +248,8 @@ public class RadarEngine {
 	/*
 	 * Verifica se uma posicao (a, b) referencia uma celula valida no tabuleiro.
 	 */
-	private boolean validPosition(int a, int b) {		
-		return a >= 0 && a < height && b >= 0 && b < width;
+	private boolean validPosition(int a, int b) {
+		return (a >= 0) && (a < height) && (b >= 0) && (b < width);
 	}
 
 	/* Metodos de acesso as propriedades height e width */
@@ -264,8 +270,8 @@ public class RadarEngine {
 		this.width = width;
 	}
 
-	public void setCell(Cell cell) {
-		this.cell = cell;
+	public void setCenter(Cell center) {
+		this.center = center;
 	}
 
 	public void setCells(Cell[][] cells) {

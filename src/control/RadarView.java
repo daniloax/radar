@@ -45,7 +45,7 @@ public class RadarView extends Transaction {
 	
 	public void update() {
 		engine.setAccounts(getRadarDatabase().getAccounts());
-		engine.setCell(getRadarDatabase().getCell(getAccountNumber()));
+		engine.setCenter(getRadarDatabase().getCell(getAccountNumber()));
 		engine.setMap();
 		printFirstRow();
 		printLine();

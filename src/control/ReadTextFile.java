@@ -36,11 +36,11 @@ public class ReadTextFile {
 				record.setLongitude(input.nextDouble());
 				record.setLatitude(input.nextDouble());
 				record.getCell().setRadius(input.nextDouble());
-				record.getCell().setSquare();
+				record.getCell().setMatrix();
 
 				System.out.printf( "%-10d%-11s%-17s%9.4f%12.4f%10.2f%7d,%2d\n",
 						record.getAccount(), record.getPassword(), record.getCell().getName(),
-						record.getLongitude(), record.getLatitude(), record.getCell().getRadius(), record.getCell().getSquare().x, record.getCell().getSquare().y );
+						record.getLongitude(), record.getLatitude(), record.getCell().getRadius(), record.getCell().getMatrix().x, record.getCell().getMatrix().y );
 			}
 		}  catch ( NoSuchElementException elementException ) {
 			System.err.println( "File improperly formed." );
@@ -65,7 +65,7 @@ public class ReadTextFile {
 				record.setLongitude( input.nextDouble() );
 				record.setLatitude( input.nextDouble() );
 				record.getCell().setRadius( input.nextDouble() );
-				record.getCell().setSquare();
+				record.getCell().setMatrix();
 				accounts.add(record);				
 			}
 		}  catch ( NoSuchElementException elementException ) {
