@@ -140,8 +140,8 @@ public class Cell implements Serializable {
 	
 	@Override
 	public String toString() {
-		return String.format("\n%s\n\n%-17s%9s%12s%10s%10s\n%-17s%9.4f%12.4f%10.2f%7d,%2d\n",
-			"Cell View", "Name", "Longitude", "Latitude", "Radius", "Matrix",
+		return String.format("\n%-17s%9s%12s%10s%10s\n%-17s%9.4f%12.4f%10.2f%7d,%2d\n",
+			"Name", "Longitude", "Latitude", "Radius", "Matrix",
 			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius, this.matrix.x, this.matrix.y);
 	}
 

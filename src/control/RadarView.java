@@ -2,7 +2,6 @@ package control;
 
 import java.util.Scanner;
 
-import model.Cell;
 import model.RadarDatabase;
 import view.Keypad;
 import view.Screen;
@@ -18,8 +17,6 @@ public class RadarView extends Transaction {
 	private Keypad keypad;
 	
 	private static final String LINE = "+-------+";
-	private static final String OFF_CELL = "|       |";
-	private static final String ON_CELL = "|   o   |";
 	
 	private static final int INVALID_OPTION = 0;
 	private static final int MAKE_CELL_ON = 1;
@@ -40,17 +37,16 @@ public class RadarView extends Transaction {
 		engine = new RadarEngine(statistics);
 		controller.setEngine(engine);
 		controller.setStatistics(statistics);
-		controller.start();
+		update();
 	}
 	
 	public void update() {
 		engine.setAccounts(getRadarDatabase().getAccounts());
 		engine.setCenter(getRadarDatabase().getCell(getAccountNumber()));
-		engine.setMap();
+		nextGeneration();
 		printFirstRow();
 		printLine();
 		engine.update();
-		printOptions();
 	}
 	
 	private void printOptions() {
@@ -129,7 +125,7 @@ public class RadarView extends Transaction {
 	 * Imprime os identificadores das colunas na primeira linha do tabuleiro
 	 */
 	private void printFirstRow() {
-		System.out.println("\n \n");
+		System.out.println("\n");
 		for (int j = getRadarDatabase().getCell(getAccountNumber()).getX() - 1; j <= getRadarDatabase().getCell(getAccountNumber()).getX() + 1; j++) {
 			System.out.printf("   %3d   ", j * 15);
 		}

@@ -120,9 +120,9 @@ public class Radar {
 			do {
 		
 				screen.displayMessageLine("\nMenu option");
-				screen.displayMessageLine(" 1 - Sign in");
-				screen.displayMessageLine(" 2 - Sign up");
-				screen.displayMessageLine(" 3 - End of run");
+				screen.displayMessageLine("[1] Sign in");
+				screen.displayMessageLine("[2] Sign up");
+				screen.displayMessageLine("[3] End of run");
 				screen.displayMessage( "\n? " );
 				
 				userType = keypad.getInput();
@@ -189,11 +189,11 @@ public class Radar {
 			do {
 		
 				screen.displayMessageLine("\nMain menu:");
-				screen.displayMessageLine("1 - Cell view");
-				screen.displayMessageLine("2 - Radar view");
-				screen.displayMessageLine("3 - Position update");
-				screen.displayMessageLine("4 - Radius update");
-				screen.displayMessageLine("5 - Exit\n");
+				screen.displayMessageLine("[1] Cell view");
+				screen.displayMessageLine("[2] Radar view");
+				screen.displayMessageLine("[3] Position update");
+				screen.displayMessageLine("[4] Radius update");
+				screen.displayMessageLine("[5] Exit\n");
 				screen.displayMessage("Enter a choise: ");
 				
 				userType = keypad.getInput();

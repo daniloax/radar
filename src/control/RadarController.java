@@ -58,7 +58,6 @@ public class RadarController {
 	
 	public void nextGeneration() {
 		engine.nextGeneration();
-		radar.update();
 	}
 	
 }

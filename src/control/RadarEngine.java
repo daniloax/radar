@@ -60,27 +60,36 @@ public class RadarEngine {
 	 * c) em todos os outros casos a celula morre ou continua morta.
 	 */
 	public void nextGeneration() {
-		List<Cell> mustOn = 	new ArrayList<Cell>();
+		
+		int i = 0;
+		int j = 0;
+		int dimension = 1;
+		
+		List<Cell> mustOn = new ArrayList<Cell>();
 		List<Cell> mustOff = new ArrayList<Cell>();
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				if (shouldOn(i, j)) {
-					mustOn.add(cells[i][j]);
-				} 
-				else if ((!shouldKeepOn(i, j)) && cells[i][j].isOn()) {
-					mustOn.add(cells[i][j]);
-				}
+
+		if (center.getRadius() / 15 >= 1)
+			dimension = 2 * dimension + 1;
+
+		else
+			dimension = 1;
+		
+		width = dimension;
+		height = dimension;
+
+		cells = new Cell[width][height];
+		
+		for (Account account : accounts) {
+			
+			i = account.getCell().getY();
+			j = account.getCell().getX();
+			
+			if (shouldOn(i, j)) {
+				cells[Math.abs(i + height)][Math.abs(j + width)] = account.getCell(); 
+				makeCellOn(Math.abs(i + height), Math.abs(j + width));
+				mustOn.add(cells[Math.abs(i + height)][Math.abs(j + width)]);
 			}
-		}
-
-		for (Cell cell : mustOn) {
-			cell.setOn();
-			statistics.recordOn();
-		}
-
-		for (Cell cell : mustOff) {
-			cell.setOff();
-			statistics.recordOff();
+			
 		}
 	}
 
@@ -149,26 +158,10 @@ public class RadarEngine {
 
 	/* verifica se uma celula deve (re)nascer */
 	private boolean shouldOn(int i, int j) {
-		
-		if (cells[i][j] != null) {
-			
-			if (cells[i][j] != center) {
-				
-				double xA = center.getX();
-				double yA = center.getY();
-				double raioA = center.getRadius();
-
-				double xB = cells[i][j].getX();
-				double yB = cells[i][j].getY();
-
-				boolean isIn = (Math.pow((xB - xA), 2) + Math.pow((yB - yA), 2) - Math.pow(raioA, 2)) <= 0;
-				return isIn && !cells[i][j].isOn();
-			
-			}
-			return !cells[i][j].isOn();
-
-		} else
-			return false;
+		return (((center.getY() - 1 <= i) && (center.getY() + 1 >= i)) && 
+				((center.getX() - 1 <= j) && (center.getX() + 1 >= j)));			
+		//return (!cells[i][j].isOn())
+		//		&& isNeighborCell(i, j);
 
 	}
 
@@ -187,6 +180,10 @@ public class RadarEngine {
 		}
 		return on;
 	}
+	
+	private boolean isNeighborCell(int i, int j) {
+		return (center.getY() - 1 <= i) && (center.getY() + 1 >= i) && ((center.getX() - 1 <= j) && (center.getX()  + 1) >= j);
+	}
 
 	public void update() {
 		
@@ -194,11 +191,13 @@ public class RadarEngine {
 
 		for (i = height - 1; i >= 0; i--) {
 			for (j = width - 1; j >= 0; j--) {
-				
-				if (shouldOn(i, j))
-					makeCellOn(i, j);
-
-				System.out.print(isCellOn(i, j) ? ON_CELL : OFF_CELL);
+				if (cells[i][j] == center) {
+					System.out.print("|   ");
+					System.err.print("o");
+					System.out.print("   |");
+					
+				} else
+					System.out.print(isCellOn(i, j) ? ON_CELL : OFF_CELL);
 			}
 			System.out.println("   " + ((i - width) * 15));
 

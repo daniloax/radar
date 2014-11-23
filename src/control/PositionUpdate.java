@@ -57,9 +57,9 @@ public class PositionUpdate extends Transaction {
 		while (userChoice == 0) {
 			
 			screen.displayMessageLine("\nPosition Update Menu:");
-			screen.displayMessageLine("1 - Longitude");
-			screen.displayMessageLine("2 - Latitude");
-			screen.displayMessageLine("3 - Cancel transaction");
+			screen.displayMessageLine("[1] Longitude");
+			screen.displayMessageLine("[2] Latitude");
+			screen.displayMessageLine("[3] Cancel transaction");
 			screen.displayMessage("\nChoose a coordinate update option: ");
 
 			try {
