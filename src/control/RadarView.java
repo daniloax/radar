@@ -1,5 +1,6 @@
 package control;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import model.RadarDatabase;
@@ -21,7 +22,8 @@ public class RadarView extends Transaction {
 	private static final int INVALID_OPTION = 0;
 	private static final int MAKE_CELL_ON = 1;
 	private static final int NEXT_GENERATION = 2;
-	private static final int HALT = 3; 
+	private final static int CANCELED = 3;
+	
 	
 	public RadarView(int accountNumber, Screen screen, RadarDatabase radarDatabase, Keypad keypad, RadarController radarController, RadarEngine radarEngine, Statistics statistics) {
 		super(accountNumber, screen, radarDatabase);
@@ -37,38 +39,86 @@ public class RadarView extends Transaction {
 		engine = new RadarEngine(statistics);
 		controller.setEngine(engine);
 		controller.setStatistics(statistics);
-		update();
-	}
-	
-	public void update() {
 		engine.setAccounts(getRadarDatabase().getAccounts());
 		engine.setCenter(getRadarDatabase().getCell(getAccountNumber()));
 		nextGeneration();
 		printFirstRow();
 		printLine();
 		engine.update();
+		update();
 	}
 	
-	private void printOptions() {
+	public void update() {
+		
 		int option;
-		System.out.println("\n \n");
 		
-		do {
-			System.out.println("Select one of the options: \n \n"); 
-			System.out.println("[1] Make a cell on");
-			System.out.println("[2] Next generation");
-			System.out.println("[3] Halt");
-		
-			System.out.print("\n \n Option: ");
+		boolean positionUpdated = false;
+		Screen screen = getScreen();
 
-			option = parseOption(keypad.getLine());
-		} while(option == 0);
+		do {
+
+			option = displayMenuOfOption();
+
+			if (option != CANCELED) 
+				positionUpdated = true;
+			
+			else {
+
+				screen.displayMessageLine("\nCanceling transaction...");
+				return;
+
+			}
+
+		} while (!positionUpdated);
+	}
+	
+	private int displayMenuOfOption() {
 		
-		switch(option) {
-			case MAKE_CELL_ON : makeCellOn(); break;
-			case NEXT_GENERATION : nextGeneration(); break;
-			case HALT : halt();
+		int input = 0;
+		Screen screen = getScreen();
+
+		while (input == 0) {
+			
+			screen.displayMessageLine("\nOption Menu:");
+			screen.displayMessageLine("[1] Make a cell on");
+			screen.displayMessageLine("[2] Next generation");
+			screen.displayMessageLine("[3] Cancel");
+			screen.displayMessage("\nChoose a option: ");
+			
+			try {
+
+				input = keypad.getInput();
+	
+				switch (input) {
+	
+					case 1:
+						makeCellOn();
+						break;
+					
+					case 2:
+						nextGeneration();
+						break;
+					
+					case 3:
+						break;
+					
+					default:
+						screen.displayMessageLine("\nInvalid selection. Try again.");
+		
+				}
+				
+				return input;
+				
+			} catch ( InputMismatchException inputException ) {
+				
+				System.err.println( "Invalid input. Please try again." );
+				System.exit( 1 );
+			}
+
 		}
+		
+		return input;
+		
 	}
 	
 	private void makeCellOn() {
@@ -108,7 +158,7 @@ public class RadarView extends Transaction {
 			return NEXT_GENERATION;
 		}
 		else if (option.equals("3")) {
-			return HALT;
+			return CANCELED;
 		}
 		else return INVALID_OPTION;
 	}

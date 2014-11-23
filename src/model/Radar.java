@@ -40,7 +40,8 @@ public class Radar {
 	
 	private RadarController radarController;
 	private RadarEngine radarEngine;
-	private RadarView radar;
+	
+	private RadarView display;
 	
 	private Statistics statistics;
 	
@@ -52,13 +53,20 @@ public class Radar {
 	 *
 	 */
 	public Radar() {
+		
 		userAuthenticated = false;
 		currentAccountNumber = 0;
+		
 		screen = new Screen();
 		keypad = new Keypad();
-		radarDatabase = new RadarDatabase();
+		
 		radarController = new RadarController();
+		radarDatabase = new RadarDatabase();
+		
 		statistics = new Statistics();
+		
+		radarEngine = new RadarEngine(statistics);
+		
 	}
 	
 	/**	

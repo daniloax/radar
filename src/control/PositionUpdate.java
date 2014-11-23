@@ -48,13 +48,25 @@ public class PositionUpdate extends Transaction {
 		} while (!positionUpdated);
 
 	}
+	
+	private void setLongitude() {
+		Screen screen = getScreen();
+		screen.displayMessage("\nLongitude coordinate: ");
+		longitude = getLongitude();
+	}
+	
+	private void setLatitude() {
+		Screen screen = getScreen();
+		screen.displayMessage("\nLatitude coordinate: ");
+		latitude = getLatitude();
+	}
 
 	private int displayMenuOfUpdate() {
 
-		int userChoice = 0;
+		int input = 0;
 		Screen screen = getScreen();
 
-		while (userChoice == 0) {
+		while (input == 0) {
 			
 			screen.displayMessageLine("\nPosition Update Menu:");
 			screen.displayMessageLine("[1] Longitude");
@@ -64,30 +76,27 @@ public class PositionUpdate extends Transaction {
 
 			try {
 
-				int input = keypad.getInput();
+				input = keypad.getInput();
 	
 				switch (input) {
 	
 					case 1:
-						userChoice = input;
-						screen.displayMessage("\nLongitude coordinate: ");
-						longitude = getLongitude();
+						setLongitude();
 						break;
 					
 					case 2:
-						userChoice = input;
-						screen.displayMessage("\nLatitude coordinate: ");
-						latitude = getLatitude();
+						setLatitude();
 						break;
-					
-					case CANCELED:
-						userChoice = CANCELED;
+						
+					case 3:
 						break;
 					
 					default:
 						screen.displayMessageLine("\nInvalid selection. Try again.");
 		
 				}
+				
+				return input;
 				
 			} catch ( InputMismatchException inputException ) {
 				
@@ -97,7 +106,7 @@ public class PositionUpdate extends Transaction {
 
 		}
 
-		return userChoice;
+		return input;
 
 	}
 	
