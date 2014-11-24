@@ -85,9 +85,11 @@ public class RadarEngine {
 			j = account.getCell().getX();
 			
 			if (shouldOn(i, j)) {
-				cells[Math.abs(i + height)][Math.abs(j + width)] = account.getCell(); 
-				makeCellOn(Math.abs(i + height), Math.abs(j + width));
-				mustOn.add(cells[Math.abs(i + height)][Math.abs(j + width)]);
+				if (validPosition(Math.abs(i - center.getY()), Math.abs(j - center.getX()))) {
+					cells[Math.abs(i - center.getY())][Math.abs(j - center.getX())] = account.getCell(); 
+					makeCellOn(Math.abs(i - center.getY()), Math.abs(j - center.getX()));
+					mustOn.add(cells[Math.abs(i - center.getY())][Math.abs(j - center.getX())]);
+				}
 			}
 			
 		}
@@ -191,13 +193,7 @@ public class RadarEngine {
 
 		for (i = height - 1; i >= 0; i--) {
 			for (j = width - 1; j >= 0; j--) {
-				if (cells[i][j] == center) {
-					System.out.print("|   ");
-					System.err.print("o");
-					System.out.print("   |");
-					
-				} else
-					System.out.print(isCellOn(i, j) ? ON_CELL : OFF_CELL);
+				System.out.print(isCellOn(i, j) ? ON_CELL : OFF_CELL);
 			}
 			System.out.println("   " + ((i - width) * 15));
 
