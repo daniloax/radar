@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Cell implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4305263296330616029L;
 	private boolean on;
 	private double radius;
 	
@@ -43,8 +47,8 @@ public class Cell implements Serializable {
 	
 	public Cell(String name, Position<Longitude, Latitude> position) {
 		this.name = name;
-		this.longitude.setValue(position.x.getValue());
-		this.latitude.setValue(position.y.getValue());
+		this.longitude.setValue(position.getX().getValue());
+		this.latitude.setValue(position.getY().getValue());
 		this.position = position;
 		setMatrix();
 	}
@@ -75,7 +79,7 @@ public class Cell implements Serializable {
 	
 	public void setLongitude(Longitude longitude) {
 		this.longitude = longitude;
-		this.position.x.setValue(longitude.getValue());
+		this.position.getX().setValue(longitude.getValue());
 	}
 	
 	public Latitude getLatitude() {
@@ -84,7 +88,7 @@ public class Cell implements Serializable {
 	
 	public void setLatitude(Latitude latitude) {
 		this.latitude = latitude;
-		this.position.y.setValue(latitude.getValue());
+		this.position.getY().setValue(latitude.getValue());
 	}
 	
 	public Position<Longitude, Latitude> getPosition() {
@@ -92,8 +96,8 @@ public class Cell implements Serializable {
 	}
 	
 	public void setPosition(Position<Longitude, Latitude> position) {
-		this.longitude.setValue(position.x.getValue());
-		this.latitude.setValue(position.y.getValue());
+		this.longitude.setValue(position.getX().getValue());
+		this.latitude.setValue(position.getY().getValue());
 		this.position = position;
 	}
 	
@@ -122,8 +126,8 @@ public class Cell implements Serializable {
 	public void setMatrix() {
 		x = longitude.getValue() < 0 ? (int) (longitude.getValue() / (double) UNIT) - 1 : (int) (longitude.getValue() / (double) UNIT) + 1;
 		y = latitude.getValue() < 0 ? (int) (latitude.getValue() / (double) UNIT) - 1 : (int) (latitude.getValue() / (double) UNIT) + 1;
-		matrix.x = x;
-		matrix.y = y;
+		matrix.setX(x);
+		matrix.setY(y);
 	}
 	
 	public void setMatrix(Position<Integer, Integer> matrix) {
@@ -142,7 +146,7 @@ public class Cell implements Serializable {
 	public String toString() {
 		return String.format("\n%-17s%9s%12s%10s%10s\n%-17s%9.4f%12.4f%10.2f%7d,%2d\n",
 			"Name", "Longitude", "Latitude", "Radius", "Matrix",
-			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius, this.matrix.x, this.matrix.y);
+			this.name, this.longitude.getValue(), this.latitude.getValue(), this.radius, this.matrix.getX(), this.matrix.getY());
 	}
 
 }

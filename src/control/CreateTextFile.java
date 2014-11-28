@@ -31,9 +31,9 @@ public class CreateTextFile {
 	 * Permite ao usuário abrir o arquivo
 	 * 
 	 */
-	public void openFile() {
+	private void openFile(String fileName) {
 		try {
-			output = new Formatter( "radar.txt" ); // abre arquivo
+			output = new Formatter( fileName ); // abre arquivo
 		} catch ( SecurityException securityException ) {
 			System.err.println( "You do not have write access to this file." );
 			System.exit( 1 );
@@ -47,13 +47,13 @@ public class CreateTextFile {
 	 * Adiciona registros ao arquivo
 	 * 
 	 */
-	public void addRecords() {
+	public void addAccount(String fileName) {
 
 		// objeto a ser gravado no arquivo
 		Account record = new Account();
 
 		Scanner input = new Scanner( System.in );
-
+		
 		System.out.printf( "%s\n%s\n%s\n%s\n\n",
 				"To terminate input, type the end-of-file indicator ",
 				"when you are prompted to enter input.",
@@ -63,19 +63,21 @@ public class CreateTextFile {
 		System.out.printf( "%s\n%s", 
 				"Enter account number (> 0), user name, longitude and latitude.",
 				"? " );
+		
+		openFile(fileName);
 
-		while ( input.hasNext() ) {
-
-			try { // gera saída dos valores para o arquivo
-
+		try { // gera saída dos valores para o arquivo
+			
+			while ( input.hasNext() ) {
+	
 				record.setAccount( input.nextInt() ); // lê o número da conta
 				record.getCell().setName( input.next() ); // lê o nome da célula
 				record.setLongitude( input.nextDouble() ); // lê a longitude
 				record.setLatitude( input.nextDouble() ); // lê a latitude
 				record.getCell().setRadius( input.nextDouble() ); // lê o raio
-
+	
 				if ( record.getAccount() > 0 ) {
-
+	
 					// grava um novo registro
 					output.format( "%d %s %.4f %.4f %.2f\n", record.getAccount(), 
 							record.getCell().getName(), record.getLongitude(),
@@ -83,25 +85,29 @@ public class CreateTextFile {
 				} else {
 					System.out.println("Account number must be greater than 0." );
 				}
-
-			} catch ( FormatterClosedException formatterClosedException ) {
-				System.err.println( "Error writing to file." );
-				return;
-			}  catch ( NoSuchElementException elementException ) {
-				System.err.println( "Invalid input. Please try again." );
-				input.nextLine();
+				
+				System.out.printf( "%s %s\n%s", "Enter account number (>0),",
+						"user name, longitude and latitude.", "? " );
 			}
-
-			System.out.printf( "%s %s\n%s", "Enter account number (>0),",
-					"user name, longitude and latitude.", "? " );
+	
+		} catch ( FormatterClosedException formatterClosedException ) {
+			System.err.println( "Error writing to file." );
+			return;
+		}  catch ( NoSuchElementException elementException ) {
+			System.err.println( "Invalid input. Please try again." );
+			input.nextLine();
+		} finally {
+			closeFile();
 		}
+
+			
 	}
 
 	/**
 	 * Fecha o arquivo
 	 * 
 	 */
-	public void closeFile() {
+	private void closeFile() {
 		if ( output != null )
 			output.close();
 	}

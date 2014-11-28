@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.Account;
 import model.Cell;
+import model.Map;
 
 /**
  * Representa um ambiente (environment) do jogo GameOfLife.
@@ -30,6 +31,7 @@ public class RadarEngine {
 	private Statistics statistics;
 
 	private List<Account> accounts;
+	private List<Map> positions;
 	
 	private static final String OFF_CELL = "|       |";
 	private static final String ON_CELL = "|   o   |";
@@ -79,7 +81,21 @@ public class RadarEngine {
 
 		cells = new Cell[width][height];
 		
-		for (Account account : accounts) {
+		for (Map position: positions) {
+			if (shouldOn(position.getY(), position.getX())) {
+				
+				i = Math.abs(position.getY() + height);
+				j = Math.abs(position.getX() + width);
+			
+				if (validPosition(i, j)) {
+					cells[i][j] = position.getAccount().getCell();
+					makeCellOn(position.getY(), position.getX());
+					mustOn.add(cells[i][j]);
+				}
+			}
+		}
+		
+		/*for (Account account : accounts) {
 			
 			i = account.getCell().getY();
 			j = account.getCell().getX();
@@ -92,7 +108,7 @@ public class RadarEngine {
 				}
 			}
 			
-		}
+		}*/
 	}
 
 	/**
@@ -205,39 +221,8 @@ public class RadarEngine {
 		this.accounts = accounts;
 	}
 
-	public void setMap() {
-
-		int i, j, dimension;
-		
-		dimension = 1;
-
-		if (center.getRadius() / 15 >= 1)
-			dimension = 2 * dimension + 1;
-
-		else
-			dimension = 1;
-		
-		width = dimension;
-		height = dimension;
-
-		cells = new Cell[width][height];
-
-		for (Account account : accounts) {
-			
-			i = account.getCell().getY();
-			j = account.getCell().getX();
-			
-			if (((center.getY() - 1 <= i) && (center.getY() + 1 > i)) && ((center.getX() - 1 <= j) && (center.getX()  + 1) > j)) {
-				
-				System.out.println(center);
-				System.out.println(account.getCell());
-
-				if (validPosition(i - center.getY(), j - center.getX()))
-					cells[Math.abs(i + height)][Math.abs(j + width)] = account.getCell();
-					
-			}
-
-		}	
+	public void setMap(List<Map> positions) {
+		this.positions = positions;
 	}
 
 	/*

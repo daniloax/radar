@@ -34,7 +34,7 @@ public class ReadSequentialFile {
 
 				System.out.printf( "%-10d%-12s%-12d%-12.4f%10.4f\n",
 						record.getAccount(), record.getPassword(), record.getCell().getName(),
-						record.getPosition().x.getValue(), record.getPosition().y.getValue() );
+						record.getPosition().getX().getValue(), record.getPosition().getY().getValue() );
 
 			}
 
@@ -62,7 +62,7 @@ public class ReadSequentialFile {
 
 				System.out.printf( "%-10d%-12s%-12d%-12.4f%10.4f\n",
 						record.getAccount(), record.getPassword(), record.getCell().getName(),
-						record.getPosition().x.getValue(), record.getPosition().y.getValue() );
+						record.getPosition().getX().getValue(), record.getPosition().getY().getValue() );
 
 			}
 

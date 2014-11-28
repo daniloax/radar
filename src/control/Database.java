@@ -3,6 +3,7 @@ package control;
 import java.util.List;
 
 import model.Account;
+import model.Map;
 
 public class Database {
 	
@@ -14,22 +15,20 @@ public class Database {
 		readTextFile = new ReadTextFile();
 	}
 	
-	public void addRecords() {
-		createTextFile.openFile();
-		createTextFile.addRecords();
-		createTextFile.closeFile();
+	public void addAccounts(String fileName) {
+		createTextFile.addAccount(fileName);
 	}
 	
-	public void readRecords() {
-		readTextFile.openFile();
-		readTextFile.readRecords();
-		readTextFile.closeFile();
+	public void readAccounts(String fileName) {
+		readTextFile.readAccounts(fileName);
 	}
 	
-	public void readRecords(List<Account> accounts) {
-		readTextFile.openFile();
-		readTextFile.readRecords(accounts);
-		readTextFile.closeFile();
+	public void readAccounts(String fileName, List<Account> accounts) {
+		readTextFile.readAccounts(fileName,accounts);
+	}
+	
+	public void readPositions(String fileName, List<Map> positions) {
+		readTextFile.readPositions(fileName, positions);
 	}
 
 }

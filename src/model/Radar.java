@@ -41,8 +41,6 @@ public class Radar {
 	private RadarController radarController;
 	private RadarEngine radarEngine;
 	
-	private RadarView display;
-	
 	private Statistics statistics;
 	
 	private final static MenuOption[] menuOption = { MenuOption.SIGN_IN, MenuOption.SIGN_UP, MenuOption.END };
@@ -164,12 +162,13 @@ public class Radar {
 		switch ( menuOption ) {
 		
 			case SIGN_IN:
-				radarDatabase.readRecords();
+				radarDatabase.readAccounts();
+				radarDatabase.readPositions();
 				break;
 			
 			case SIGN_UP:
-				radarDatabase.addRecords();
-				radarDatabase.readRecords();
+				radarDatabase.addAccounts();
+				radarDatabase.readAccounts();
 				break;
 				
 			case END:
@@ -287,6 +286,9 @@ public class Radar {
 				
 			case RADIUS_UPDATE:
 				temp = new RadiusUpdate(currentAccountNumber, screen, radarDatabase, keypad);
+				break;
+			
+			default:
 				break;
 		
 		}

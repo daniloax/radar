@@ -9,10 +9,12 @@ public class RadarDatabase {
 
 	private Database database;
 	private List<Account> accounts;
+	private List<Map> positions;
 	
 	public RadarDatabase() {
 		accounts = new ArrayList<Account>();
 		database = new Database();
+		positions = new ArrayList<Map>();
 	}
 	
 	public String getUser(int account) {
@@ -29,6 +31,10 @@ public class RadarDatabase {
 	
 	public List<Account> getAccounts() {
 		return accounts;
+	}
+	
+	public List<Map> getMap() {			
+		return positions;
 	}
 	
 	public boolean authenticateUser(int account, int password) {
@@ -57,12 +63,21 @@ public class RadarDatabase {
 		getAccount(account).setPosition(longitude, latitude);
 	}
 	
-	public void addRecords() {
-		database.addRecords();
+	public void addAccounts() {
+		database.addAccounts("account.txt");
 	}
 	
-	public void readRecords() {
-		database.readRecords(accounts);
+	public void readAccounts() {
+		database.readAccounts("account.txt", accounts);
+	}
+	
+	public void readPositions() {
+		database.readPositions("map.txt", positions);
+	}
+	
+	public void setPositions() {
+		for (Map position : positions)
+			position.getAccount().setCell(getCell(position.getAccount().getAccount()));
 	}
 	
 }

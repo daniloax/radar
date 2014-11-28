@@ -3,6 +3,7 @@ package control;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import model.Map;
 import model.RadarDatabase;
 import view.Keypad;
 import view.Screen;
@@ -41,6 +42,8 @@ public class RadarView extends Transaction {
 		controller.setStatistics(statistics);
 		engine.setAccounts(getRadarDatabase().getAccounts());
 		engine.setCenter(getRadarDatabase().getCell(getAccountNumber()));
+		getRadarDatabase().setPositions();
+		engine.setMap(getRadarDatabase().getMap());
 		nextGeneration();
 		printFirstRow();
 		printLine();

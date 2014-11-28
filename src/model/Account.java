@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Account implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6273540178510592095L;
 	private int accountNumber;
 	private int password;
 	
@@ -17,8 +21,8 @@ public class Account implements Serializable {
 		this.accountNumber = accountNumber;
 		this.password = password;
 		this.cell.setName(name);
-		this.cell.getPosition().x.setValue(longitude);
-		this.cell.getPosition().y.setValue(latitude);
+		this.cell.getPosition().getX().setValue(longitude);
+		this.cell.getPosition().getY().setValue(latitude);
 	}
 	
 	public Account( int accountNumber, int password, String name, Position<Longitude, Latitude> position) {
@@ -78,9 +82,9 @@ public class Account implements Serializable {
 	
 	public void setPosition(Double longitude, Double latitude) {
 		if (longitude != null)
-			this.cell.getPosition().x.setValue(longitude);
+			this.cell.getPosition().getX().setValue(longitude);
 		if (latitude != null)
-			this.cell.getPosition().y.setValue(latitude);
+			this.cell.getPosition().getY().setValue(latitude);
 	}
 	
 	public boolean validatePassword(int password) {

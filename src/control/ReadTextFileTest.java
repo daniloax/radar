@@ -2,10 +2,9 @@ package control;
 
 public class ReadTextFileTest {
 	public static void main( String[] args ) {
-		ReadTextFile application = new ReadTextFile();
 
-		application.openFile();
-		application.readRecords();
-		application.closeFile();
+		ReadTextFile application = new ReadTextFile();
+		application.readAccounts("account.txt");
+
 	}
 }

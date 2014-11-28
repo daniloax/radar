@@ -7,7 +7,6 @@ public class AccountTest {
 		Account account;
 		Longitude x;
 		Latitude y;
-		Position<Longitude, Latitude> position;
 		
 		account = new Account();
 		
