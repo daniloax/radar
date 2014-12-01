@@ -8,18 +8,6 @@ import model.Account;
 import model.Cell;
 import model.Map;
 
-/**
- * Representa um ambiente (environment) do jogo GameOfLife.
- * 
- * Essa implementacao eh nao inifinita, ou seja, nem todas as celulas possuem
- * oito celulas vizinhas. Por exemplo, a celula de coordenada (0,0) possui
- * apenas tres celulas vizinhas, (0,1), (1,0) e (1,1).
- * 
- * Um ambiente eh representado como um array bidimensional de celulas, com
- * altura (height) e comprimento (width).
- * 
- * @author rbonifacio
- */
 public class RadarEngine {
 
 	private int height;
@@ -38,37 +26,22 @@ public class RadarEngine {
 
 
 	/**
-	 * Construtor da classe Environment.
+	 * Construtor da classe RadarEngine.
 	 * 
-	 * @param height
-	 *            dimensao vertical do ambiente
-	 * @param width
-	 *            dimensao horizontal do ambiente
+	 * @param statistics estatisticas
 	 */
 	public RadarEngine(Statistics statistics) {
 		this.statistics = statistics;
 	}
 
 	/**
-	 * Calcula uma nova geracao do ambiente. Essa implementacao utiliza o
-	 * algoritmo do Conway, ou seja:
 	 * 
-	 * a) uma celula morta com exatamente tres celulas vizinhas vivas se torna
-	 * uma celula viva.
-	 * 
-	 * b) uma celula viva com duas ou tres celulas vizinhas vivas permanece
-	 * viva.
-	 * 
-	 * c) em todos os outros casos a celula morre ou continua morta.
 	 */
 	public void nextGeneration() {
 		
 		int i = 0;
 		int j = 0;
 		int dimension = 1;
-		
-		List<Cell> mustOn = new ArrayList<Cell>();
-		List<Cell> mustOff = new ArrayList<Cell>();
 
 		if (center.getRadius() / 15 >= 1)
 			dimension = 2 * dimension + 1;
@@ -84,35 +57,21 @@ public class RadarEngine {
 		for (Map position: positions) {
 			if (shouldOn(position.getY(), position.getX())) {
 				
-				i = Math.abs(position.getY() + height);
-				j = Math.abs(position.getX() + width);
-			
+				if (dimension > 1) {
+					i = Math.abs(position.getY() + height);
+					j = Math.abs(position.getX() + width);
+				}
+				
 				if (validPosition(i, j)) {
 					cells[i][j] = position.getAccount().getCell();
-					makeCellOn(position.getY(), position.getX());
-					mustOn.add(cells[i][j]);
+					makeCellOn(i, j);
 				}
 			}
 		}
-		
-		/*for (Account account : accounts) {
-			
-			i = account.getCell().getY();
-			j = account.getCell().getX();
-			
-			if (shouldOn(i, j)) {
-				if (validPosition(Math.abs(i - center.getY()), Math.abs(j - center.getX()))) {
-					cells[Math.abs(i - center.getY())][Math.abs(j - center.getX())] = account.getCell(); 
-					makeCellOn(Math.abs(i - center.getY()), Math.abs(j - center.getX()));
-					mustOn.add(cells[Math.abs(i - center.getY())][Math.abs(j - center.getX())]);
-				}
-			}
-			
-		}*/
 	}
 
 	/**
-	 * Torna a celula de posicao (i, j) viva
+	 * Ativa a celula de posicao (i, j)
 	 * 
 	 * @param i posicao vertical da celula
 	 * @param j posicao horizontal da celula
@@ -130,11 +89,11 @@ public class RadarEngine {
 	}
 
 	/**
-	 * Verifica se uma celula na posicao (i, j) estah viva.
+	 * Verifica se uma celula na posicao (i, j) esta ativa.
 	 * 
-	 * @param i Posicao vertical da celula
-	 * @param j Posicao horizontal da celula
-	 * @return Verdadeiro caso a celula de posicao (i,j) esteja viva.
+	 * @param i posicao vertical da celula
+	 * @param j posicao horizontal da celula
+	 * @return verdadeiro caso a celula de posicao (i,j) esteja viva.
 	 * 
 	 * @throws InvalidParameterException caso a posicao (i,j) nao seja valida. 
 	 */
@@ -151,9 +110,7 @@ public class RadarEngine {
 	}
 
 	/**
-	 * Retorna o numero de celulas vivas no ambiente. 
-	 * Esse metodo eh particularmente util para o calculo de 
-	 * estatisticas e para melhorar a testabilidade.
+	 * Retorna o numero de celulas ativas no ambiente. 
 	 * 
 	 * @return  numero de celulas vivas.
 	 */
@@ -169,22 +126,20 @@ public class RadarEngine {
 		return onCells;
 	}
 
-	/* verifica se uma celula deve ser mantida viva */
+	/** verifica se uma celula deve ser mantida viva */
 	private boolean shouldKeepOn(int i, int j) {
 		return (cells[i][j].isOn()) && (numberOfNeighborhoodOnCells(i, j) == 2 || numberOfNeighborhoodOnCells(i, j) == 3);
 	}
 
-	/* verifica se uma celula deve (re)nascer */
+	/** verifica se uma celula deve ser ativada */
 	private boolean shouldOn(int i, int j) {
 		return (((center.getY() - 1 <= i) && (center.getY() + 1 >= i)) && 
-				((center.getX() - 1 <= j) && (center.getX() + 1 >= j)));			
-		//return (!cells[i][j].isOn())
-		//		&& isNeighborCell(i, j);
+				((center.getX() - 1 <= j) && (center.getX() + 1 >= j)));
 
 	}
 
-	/*
-	 * Computa o numero de celulas vizinhas vivas, dada uma posicao no ambiente
+	/**
+	 * Computa o numero de celulas vizinhas ativas, dada uma posicao no ambiente
 	 * de referencia identificada pelos argumentos (i,j).
 	 */
 	private int numberOfNeighborhoodOnCells(int i, int j) {
@@ -225,14 +180,14 @@ public class RadarEngine {
 		this.positions = positions;
 	}
 
-	/*
+	/**
 	 * Verifica se uma posicao (a, b) referencia uma celula valida no tabuleiro.
 	 */
 	private boolean validPosition(int a, int b) {
 		return (a >= 0) && (a < height) && (b >= 0) && (b < width);
 	}
 
-	/* Metodos de acesso as propriedades height e width */
+	/** Metodos de acesso as propriedades height e width */
 
 	public int getHeight() {
 		return height;

@@ -1,9 +1,7 @@
 package control;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
-import model.Map;
 import model.RadarDatabase;
 import view.Keypad;
 import view.Screen;
@@ -19,10 +17,6 @@ public class RadarView extends Transaction {
 	private Keypad keypad;
 	
 	private static final String LINE = "+-------+";
-	
-	private static final int INVALID_OPTION = 0;
-	private static final int MAKE_CELL_ON = 1;
-	private static final int NEXT_GENERATION = 2;
 	private final static int CANCELED = 3;
 	
 	
@@ -125,16 +119,17 @@ public class RadarView extends Transaction {
 	}
 	
 	private void makeCellOn() {
-		int i, j = 0;
-		Scanner s = new Scanner(System.in);
+		
+		int i = 0;
+		int j = 0;
 		
 		do {
 			
 			System.out.print("\n Inform the row number (0 - " + engine.getHeight() + "): " );
-			i = s.nextInt();
-			System.out.print("\n Inform the column number (0 - " + engine.getWidth() + "): " );
+			i = keypad.getInput();
 			
-			j = s.nextInt();
+			System.out.print("\n Inform the column number (0 - " + engine.getWidth() + "): " );
+			j = keypad.getInput();
 		
 		} while(!validPosition(i, j));
 		
@@ -152,21 +147,8 @@ public class RadarView extends Transaction {
 	private boolean validPosition(int i, int j) {
 		return i >= 0 && i < dimension && j >= 0 && j < dimension;
 	}
-
-	private int parseOption(String option) {
-		if(option.equals("1")) {
-			return MAKE_CELL_ON;
-		}
-		else if (option.equals("2")) {
-			return NEXT_GENERATION;
-		}
-		else if (option.equals("3")) {
-			return CANCELED;
-		}
-		else return INVALID_OPTION;
-	}
-
-	/* Imprime uma linha usada como separador das linhas do tabuleiro */
+	
+	/* Imprime uma linha usada como separador das linhas do radar */
 	private void printLine() {
 		for (int j = 0; j < dimension; j++) {
 			System.out.print(LINE);
@@ -174,9 +156,7 @@ public class RadarView extends Transaction {
 		System.out.print("\n");
 	}
 
-	/*
-	 * Imprime os identificadores das colunas na primeira linha do tabuleiro
-	 */
+	/* Imprime os identificadores das colunas na primeira linha do radar */
 	private void printFirstRow() {
 		System.out.println("\n");
 		for (int j = getRadarDatabase().getCell(getAccountNumber()).getX() - 1; j <= getRadarDatabase().getCell(getAccountNumber()).getX() + 1; j++) {
