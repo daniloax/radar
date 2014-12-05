@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 public class Cell implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4305263296330616029L;
 	private boolean on;
 	private double radius;

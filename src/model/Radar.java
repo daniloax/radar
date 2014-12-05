@@ -31,12 +31,12 @@ import control.Transaction;
  */
 public class Radar {
 
-	private boolean userAuthenticated; // se usuário foi autenticado
-	private int currentAccountNumber; // número atual da conta do usuário
+	private boolean userAuthenticated;
+	private int currentAccountNumber;
 	
-	private Screen screen; // tela do radar
-	private Keypad keypad; // teclado do radar
-	private RadarDatabase radarDatabase; // banco de dados com informações sobre as contas
+	private Screen screen;
+	private Keypad keypad;
+	private RadarDatabase radarDatabase;
 	
 	private RadarController radarController;
 	private RadarEngine radarEngine;

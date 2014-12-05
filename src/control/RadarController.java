@@ -2,13 +2,6 @@ package control;
 
 import java.security.InvalidParameterException;
 
-/**
- * Classe que atua como um controlador do 
- * padr�o MVC, separando os componentes da 
- * camada de apresentacao e model. 
- * 
- * @author rbonifacio
- */
 public class RadarController {
 
 	private RadarEngine engine;
@@ -40,7 +33,6 @@ public class RadarController {
 	}
 	
 	public void halt() {
-		//oops, nao muito legal fazer sysout na classe Controller
 		System.out.println("\n \n");
 		statistics.display();
 		System.exit(0);

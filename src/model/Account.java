@@ -3,10 +3,7 @@ package model;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 6273540178510592095L;
 	private int accountNumber;
 	private int password;
@@ -85,6 +82,10 @@ public class Account implements Serializable {
 			this.cell.getPosition().getX().setValue(longitude);
 		if (latitude != null)
 			this.cell.getPosition().getY().setValue(latitude);
+	}
+	
+	public void setRadius(Double radius) {
+		this.cell.setRadius(radius);
 	}
 	
 	public boolean validatePassword(int password) {

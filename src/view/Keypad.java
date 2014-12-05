@@ -22,4 +22,8 @@ public class Keypad {
 		return input.nextLine();
 	}
 	
+	public double getRadius() {
+		return input.nextDouble();
+	}
+	
 }

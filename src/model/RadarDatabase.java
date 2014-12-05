@@ -59,10 +59,6 @@ public class RadarDatabase {
 		return getAccount(account).getLatitude();
 	}
 	
-	public void setPosition(int account, Double longitude, Double latitude ) {
-		getAccount(account).setPosition(longitude, latitude);
-	}
-	
 	public void addAccounts() {
 		database.addAccounts("account.txt");
 	}
@@ -75,9 +71,17 @@ public class RadarDatabase {
 		database.readPositions("map.txt", positions);
 	}
 	
+	public void setPosition(int account, Double longitude, Double latitude ) {
+		getAccount(account).setPosition(longitude, latitude);
+	}
+	
 	public void setPositions() {
 		for (Map position : positions)
 			position.getAccount().setCell(getCell(position.getAccount().getAccount()));
+	}
+	
+	public void setRadius(int account, Double radius) {
+		getAccount(account).setRadius(radius);
 	}
 	
 }

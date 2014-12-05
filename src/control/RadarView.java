@@ -148,7 +148,7 @@ public class RadarView extends Transaction {
 		return i >= 0 && i < dimension && j >= 0 && j < dimension;
 	}
 	
-	/* Imprime uma linha usada como separador das linhas do radar */
+	/** Imprime uma linha usada como separador das linhas do radar */
 	private void printLine() {
 		for (int j = 0; j < dimension; j++) {
 			System.out.print(LINE);
@@ -156,7 +156,7 @@ public class RadarView extends Transaction {
 		System.out.print("\n");
 	}
 
-	/* Imprime os identificadores das colunas na primeira linha do radar */
+	/** Imprime os identificadores das colunas na primeira linha do radar */
 	private void printFirstRow() {
 		System.out.println("\n");
 		for (int j = getRadarDatabase().getCell(getAccountNumber()).getX() - 1; j <= getRadarDatabase().getCell(getAccountNumber()).getX() + 1; j++) {

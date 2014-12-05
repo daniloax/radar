@@ -5,9 +5,6 @@ import java.io.Serializable;
 
 public class Position<X, Y> implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4029913290429621687L;
 	private X x;
 	private Y y;
